@@ -3,7 +3,7 @@
   "package": "io.github.reoseah.hematurgy.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ItemStackMixin"
+    "ItemStackMixin", "LecternBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,6 +28,11 @@ import java.util.Objects;
 
 @Mixin(ItemRenderer.class)
 public abstract class ItemRendererMixin {
+    @Unique
+    private static final ModelIdentifier HEMONOMICON = new ModelIdentifier("hematurgy", "hemonomicon", "inventory");
+    @Unique
+    private static final ModelIdentifier HEMONOMICON_IN_HAND = new ModelIdentifier("hematurgy", "hemonomicon_in_hand", "inventory");
+
     @Shadow
     private @Final ItemModels models;
     @Shadow
@@ -39,7 +45,7 @@ public abstract class ItemRendererMixin {
     public void setHemonomiconModel(ItemStack stack, @Nullable World world, @Nullable LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> ci) {
         Item item = stack.getItem();
         if (item == HemonomiconItem.INSTANCE) {
-            BakedModel model = this.models.getModelManager().getModel(new ModelIdentifier("hematurgy", "hemonomicon_in_hand", "inventory"));
+            BakedModel model = this.models.getModelManager().getModel(HEMONOMICON_IN_HAND);
             ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld) world : null;
             model = model.getOverrides().apply(model, stack, clientWorld, entity, seed);
             ci.setReturnValue(model == null ? this.models.getModelManager().getMissingModel() : model);
@@ -53,7 +59,7 @@ public abstract class ItemRendererMixin {
             boolean gui = mode == ModelTransformationMode.GUI;
             boolean notInHand = gui || mode == ModelTransformationMode.GROUND || mode == ModelTransformationMode.FIXED;
             if (notInHand) {
-                model = this.models.getModelManager().getModel(new ModelIdentifier("hematurgy", "hemonomicon", "inventory"));
+                model = this.models.getModelManager().getModel(HEMONOMICON);
             }
             model.getTransformation().getTransformation(mode).apply(leftHanded, matrices);
             matrices.translate(-0.5D, -0.5D, -0.5D);

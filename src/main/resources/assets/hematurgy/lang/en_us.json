@@ -1,4 +1,7 @@
 {
   "itemGroup.hematurgy": "Hematurgy",
-  "item.hematurgy.hemonomicon": "Hemonomicon"
+  "item.hematurgy.hemonomicon": "Hemonomicon",
+
+  "hematurgy.test": "Test Title",
+  "hematurgy.test.0": "Quick brown fox jumps over the lazy dog. The lazy dog does not jump. \"To jump or not to jump?\" - that's not a question, says brown fox!"
 }

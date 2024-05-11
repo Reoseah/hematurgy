@@ -24,6 +24,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BuiltinModelItemRenderer.class)
 public class BuiltinItemModelRendererMixin {
     @Unique
+    private static final Identifier TEXTURE = new Identifier("hematurgy", "textures/entity/hemonomicon.png");
+
+    @Unique
     private BookModel bookModel;
 
     @Inject(at = @At("HEAD"), method = "reload")
@@ -37,7 +40,7 @@ public class BuiltinItemModelRendererMixin {
         if (item == HemonomiconItem.INSTANCE) {
             matrices.push();
             matrices.scale(1, -1, -1);
-            VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, this.bookModel.getLayer(new Identifier("hematurgy", "textures/entity/hemonomicon.png")), false, false);
+            VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(vertexConsumers, this.bookModel.getLayer(TEXTURE), false, false);
             this.bookModel.setPageAngles(0, 0.1F, 0.9F, 1.2F);
             this.bookModel.render(matrices, vertexConsumer, light, overlay, 1, 1, 1, 1);
             matrices.pop();
