@@ -1,0 +1,20 @@
+{
+  "elements": [
+    { "type": "heading", "translation_key": "hematurgy.test" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "chapter" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "chapter" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+    { "type": "chapter" },
+    { "type": "paragraph", "translation_key": "hematurgy.test.0" }
+  ]
+}

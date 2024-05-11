@@ -1,6 +1,8 @@
 package io.github.reoseah.hematurgy;
 
 import io.github.reoseah.hematurgy.item.HemonomiconItem;
+import io.github.reoseah.hematurgy.network.HemonomiconNetworking;
+import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -52,10 +54,16 @@ public class Hematurgy implements ModInitializer {
 
         Registry.register(Registries.ITEM, "hematurgy:hemonomicon", HemonomiconItem.INSTANCE);
 
+        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:current_page", HemonomiconItem.CURRENT_PAGE);
+
         Registry.register(Registries.ITEM_GROUP, "hematurgy:main", ITEM_GROUP);
+
+        Registry.register(Registries.SCREEN_HANDLER, "hematurgy:hemonomicon", HemonomiconScreenHandler.TYPE);
 
         LootTableEvents.MODIFY.register(Hematurgy::modifyLootTable);
         UseBlockCallback.EVENT.register(Hematurgy::interact);
+
+        HemonomiconNetworking.register();
 
         LOGGER.info("Finished initialization");
     }
