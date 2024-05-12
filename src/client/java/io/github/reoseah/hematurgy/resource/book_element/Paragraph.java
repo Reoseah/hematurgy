@@ -1,4 +1,4 @@
-package io.github.reoseah.hematurgy.resource.book;
+package io.github.reoseah.hematurgy.resource.book_element;
 
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Drawable;

@@ -1,12 +1,14 @@
-package io.github.reoseah.hematurgy.resource.book;
+package io.github.reoseah.hematurgy.resource.book_element;
 
+import io.github.reoseah.hematurgy.resource.BookLayout;
+import io.github.reoseah.hematurgy.resource.BookProperties;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Drawable;
 
 public abstract class BookSimpleElement implements BookElement {
     @Override
-    public void populate(BookLayout.Builder builder, TextRenderer textRenderer) {
-        int elementHeight = this.getHeight(builder.width, textRenderer);
+    public void populate(BookLayout.Builder builder, BookProperties properties, TextRenderer textRenderer) {
+        int elementHeight = this.getHeight(properties.pageWidth, textRenderer);
 
         int elementY = builder.getCurrentY() + (builder.isNewPage() ? 0 : this.getVerticalGap());
         if (elementY + elementHeight > builder.getMaxY() && !builder.isNewPage()) {
@@ -14,7 +16,7 @@ public abstract class BookSimpleElement implements BookElement {
             elementY = builder.getCurrentY();
         }
         int elementX = builder.getCurrentX();
-        Drawable renderer = this.createWidget(elementX, elementY, builder.width, builder.getMaxY() - elementY, textRenderer);
+        Drawable renderer = this.createWidget(elementX, elementY, properties.pageWidth, builder.getMaxY() - elementY, textRenderer);
         builder.addWidget(renderer);
         builder.setCurrentY(elementY + elementHeight);
     }

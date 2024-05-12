@@ -1,10 +1,16 @@
 package io.github.reoseah.hematurgy.resource;
 
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import io.github.reoseah.hematurgy.Hematurgy;
-import io.github.reoseah.hematurgy.resource.book.*;
+import io.github.reoseah.hematurgy.resource.book_element.BookElement;
+import io.github.reoseah.hematurgy.resource.book_element.ChapterMarker;
+import io.github.reoseah.hematurgy.resource.book_element.Heading;
+import io.github.reoseah.hematurgy.resource.book_element.Paragraph;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.resource.Resource;
@@ -24,17 +30,12 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
 
     public static BookElement[] elements = {};
 
-    public static BookLayout buildLayout(int leftPageX, int rightPageX, int y, int width, int height, TextRenderer textRenderer) {
-        var builder = new BookLayout.Builder(leftPageX, rightPageX, y, width, height);
-        for (BookElement element : BookLoader.elements) {
-            element.populate(builder, textRenderer);
+    public static BookLayout buildLayout(BookProperties properties, TextRenderer textRenderer) {
+        var builder = new BookLayout.Builder(properties);
+        for (BookElement element : elements) {
+            element.populate(builder, properties, textRenderer);
         }
         return builder.build();
-    }
-
-    @Override
-    public Identifier getFabricId() {
-        return new Identifier("hematurgy:hemonomicon");
     }
 
     @Override
@@ -55,7 +56,7 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
     protected void apply(JsonObject prepared, ResourceManager manager, Profiler profiler) {
         List<BookElement> elements = new ArrayList<>();
 
-        for (JsonElement element : JsonHelper.getArray(prepared, "elements", new JsonArray())) {
+        for (var element : JsonHelper.getArray(prepared, "elements", new JsonArray())) {
             try {
                 elements.add(readElement(JsonHelper.asObject(element, "element")));
             } catch (Exception e) {
@@ -140,5 +141,10 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
 //            }
             default -> throw new JsonParseException("Unknown element type: " + type);
         };
+    }
+
+    @Override
+    public Identifier getFabricId() {
+        return new Identifier("hematurgy:hemonomicon");
     }
 }

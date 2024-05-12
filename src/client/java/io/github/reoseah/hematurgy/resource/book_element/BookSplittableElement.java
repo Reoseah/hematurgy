@@ -1,20 +1,22 @@
-package io.github.reoseah.hematurgy.resource.book;
+package io.github.reoseah.hematurgy.resource.book_element;
 
+import io.github.reoseah.hematurgy.resource.BookLayout;
+import io.github.reoseah.hematurgy.resource.BookProperties;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Drawable;
 
 public abstract class BookSplittableElement extends BookSimpleElement {
     @Override
-    public void populate(BookLayout.Builder builder, TextRenderer textRenderer) {
+    public void populate(BookLayout.Builder builder, BookProperties properties, TextRenderer textRenderer) {
         int elementY = builder.getCurrentY() + (builder.isNewPage() ? 0 : this.getVerticalGap());
-        int elementHeight = this.getHeight(builder.width, textRenderer);
+        int elementHeight = this.getHeight(properties.pageWidth, textRenderer);
 
         if (elementY + elementHeight > builder.getMaxY()
                 && this.canSplit(elementHeight, builder.getMaxY() - elementY, textRenderer)) {
             int elementX = builder.getCurrentX();
             int nextX = builder.getNextX();
 
-            WidgetPair result = this.createWidgetPair(elementX, elementY, builder.width, builder.getMaxY() - elementY, nextX, builder.getMinY(), builder.height, textRenderer);
+            WidgetPair result = this.createWidgetPair(elementX, elementY, properties.pageWidth, builder.getMaxY() - elementY, nextX, builder.getMinY(), properties.pageHeight, textRenderer);
 
             builder.addWidget(result.current());
             builder.advancePage();
@@ -22,7 +24,7 @@ public abstract class BookSplittableElement extends BookSimpleElement {
 
             builder.setCurrentY(builder.getMinY() + result.nextHeight());
         } else {
-            super.populate(builder, textRenderer);
+            super.populate(builder, properties, textRenderer);
         }
     }
 

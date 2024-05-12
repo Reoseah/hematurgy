@@ -1,4 +1,4 @@
-package io.github.reoseah.hematurgy.resource.book;
+package io.github.reoseah.hematurgy.resource.book_element;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.RegistryByteBuf;

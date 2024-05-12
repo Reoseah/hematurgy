@@ -1,9 +1,10 @@
 package io.github.reoseah.hematurgy.screen.client;
 
 import io.github.reoseah.hematurgy.network.UseBookmarkCustomPayload;
+import io.github.reoseah.hematurgy.resource.BookLayout;
 import io.github.reoseah.hematurgy.resource.BookLoader;
-import io.github.reoseah.hematurgy.resource.book.BookLayout;
-import io.github.reoseah.hematurgy.resource.book.BookSlot;
+import io.github.reoseah.hematurgy.resource.BookProperties;
+import io.github.reoseah.hematurgy.resource.book_element.BookSlot;
 import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
 import io.github.reoseah.hematurgy.screen.MutableSlot;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -23,21 +24,33 @@ import java.util.List;
 
 public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
     public static final Identifier TEXTURE = new Identifier("hematurgy:textures/gui/hemonomicon.png");
-    public static final int FULL_BOOKMARK_WIDTH = 135;
-    public static final int FULL_BOOKMARK_U = 64;
-    public static final int FULL_BOOKMARK_V = 192;
 
-    private static final int LEFT_PAGE_X = 17, RIGHT_PAGE_X = 138, PAGE_Y = 15;
-    private static final int PAGE_WIDTH = 102, PAGE_HEIGHT = 140;
+    private static final int PAGE_WIDTH = 102;
+    private static final int PAGE_HEIGHT = 140;
+    private static final int TOP_OFFSET = 15;
+    private static final int LEFT_PAGE_OFFSET = 17;
+    private static final int RIGHT_PAGE_OFFSET = 138;
 
-    private static final int PLAYER_SLOTS_U = 0, PLAYER_SLOTS_V = 224;
-    private static final int PLAYER_SLOTS_HEIGHT = 32, PLAYER_SLOTS_WIDTH = 176;
+    private static final int BOOKMARK_OFFSET = TOP_OFFSET + 4;
+    private static final int BOOKMARK_HEIGHT = 20;
+    private static final int FULL_BOOKMARK_WIDTH = 135;
+    private static final int FULL_BOOKMARK_U = 64;
+    private static final int FULL_BOOKMARK_V = 192;
+    private static final int HIDDEN_BOOKMARK_WIDTH = 16;
+    private static final int HIDDEN_BOOKMARK_U = 224;
+    private static final int HIDDEN_BOOKMARK_V = 192;
 
-    public static final int SLOT_U = 202, SLOT_V = 224;
-    public static final int RESULT_SLOT_U = 176, RESULT_SLOT_V = 224;
+    private static final int PLAYER_SLOTS_U = 0;
+    private static final int PLAYER_SLOTS_V = 224;
+    private static final int PLAYER_SLOTS_HEIGHT = 32;
+    private static final int PLAYER_SLOTS_WIDTH = 176;
 
-    public static final int HIDDEN_BOOKMARK_U = 224, HIDDEN_BOOKMARK_V = 192, HIDDEN_BOOKMARK_WIDTH = 16, BOOKMARK_HEIGHT = 20;
+    private static final int SLOT_U = 202;
+    private static final int SLOT_V = 224;
+    private static final int RESULT_SLOT_U = 176;
+    private static final int RESULT_SLOT_V = 224;
 
+    private final BookProperties properties = new BookProperties(TEXTURE, PAGE_WIDTH, PAGE_HEIGHT, TOP_OFFSET, LEFT_PAGE_OFFSET, RIGHT_PAGE_OFFSET, BOOKMARK_OFFSET, BOOKMARK_HEIGHT, FULL_BOOKMARK_WIDTH, FULL_BOOKMARK_U, FULL_BOOKMARK_V, HIDDEN_BOOKMARK_WIDTH, HIDDEN_BOOKMARK_U, HIDDEN_BOOKMARK_V);
     private BookLayout layout;
 
     private PageTurnWidget previousPageButton;
@@ -64,7 +77,7 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
         super.init();
 
         if (this.layout == null) {
-            this.layout = BookLoader.buildLayout(LEFT_PAGE_X, RIGHT_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, this.textRenderer);
+            this.layout = BookLoader.buildLayout(this.properties, this.textRenderer);
         }
 
         this.clearChildren();
@@ -101,7 +114,7 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
     }
 
     private void updateSlots() {
-        BookSlot[] slots = this.layout.getBookSlots(this.handler.currentPage.get());
+        BookSlot[] slots = this.layout.getFoldSlots(this.handler.currentPage.get());
 
 //        this.handler.updateSlots(slots);
 //        ClientPlayNetworking.send(HemonomiconPackets.PAGE_SLOTS, Util.make(PacketByteBufs.create(), buf -> {
@@ -127,12 +140,11 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
         context.getMatrices().push();
         context.getMatrices().translate(this.x, this.y, 0);
 
-        context.drawTexture(TEXTURE, 0, 0, 0, 0, this.backgroundWidth, this.backgroundHeight);
-        context.drawTexture(TEXTURE, (this.backgroundWidth - PLAYER_SLOTS_WIDTH) / 2, this.playerSlotsY, PLAYER_SLOTS_U, PLAYER_SLOTS_V, PLAYER_SLOTS_WIDTH, PLAYER_SLOTS_HEIGHT);
+        context.drawTexture(this.properties.texture, 0, 0, 0, 0, this.backgroundWidth, this.backgroundHeight);
+        context.drawTexture(this.properties.texture, (this.backgroundWidth - PLAYER_SLOTS_WIDTH) / 2, this.playerSlotsY, PLAYER_SLOTS_U, PLAYER_SLOTS_V, PLAYER_SLOTS_WIDTH, PLAYER_SLOTS_HEIGHT);
 
         mouseX -= this.x;
         mouseY -= this.y;
-
         for (Drawable element : this.leftPage) {
             element.render(context, mouseX, mouseY, delta);
         }
@@ -140,18 +152,20 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
             element.render(context, mouseX, mouseY, delta);
         }
 
+        int currentPage = this.handler.currentPage.get();
         for (int i = 0; i < this.layout.chapterPages().size(); i++) {
-            int currentPage = this.handler.currentPage.get();
             int chapterPage = this.layout.chapterPages().getInt(i);
-            int bookmarkY = PAGE_Y + 4 + i * BOOKMARK_HEIGHT;
-            int bookmarkX = 256 / 2 + (chapterPage > currentPage ? FULL_BOOKMARK_WIDTH - HIDDEN_BOOKMARK_WIDTH : -FULL_BOOKMARK_WIDTH);
+            if (chapterPage != currentPage) {
+                int bookmarkY = this.properties.getBookmarkY(i);
+                int bookmarkX = 256 / 2 + (chapterPage > currentPage ? this.properties.bookmarkFullWidth - this.properties.bookmarkHiddenWidth : -this.properties.bookmarkFullWidth);
 
-            boolean hovered = mouseX > bookmarkX && mouseX < bookmarkX + HIDDEN_BOOKMARK_WIDTH && mouseY > bookmarkY && mouseY < bookmarkY + BOOKMARK_HEIGHT;
+                boolean hovered = mouseX > bookmarkX && mouseX < bookmarkX + this.properties.bookmarkHiddenWidth && mouseY > bookmarkY && mouseY < bookmarkY + this.properties.bookmarkHeight;
 
-            if (chapterPage < currentPage) {
-                context.drawTexture(TEXTURE, bookmarkX, bookmarkY, HIDDEN_BOOKMARK_U, HIDDEN_BOOKMARK_V + (hovered ? BOOKMARK_HEIGHT : 0), HIDDEN_BOOKMARK_WIDTH, BOOKMARK_HEIGHT);
-            } else if (chapterPage > currentPage) {
-                context.drawTexture(TEXTURE, bookmarkX, bookmarkY, HIDDEN_BOOKMARK_U + HIDDEN_BOOKMARK_WIDTH, HIDDEN_BOOKMARK_V + (hovered ? BOOKMARK_HEIGHT : 0), HIDDEN_BOOKMARK_WIDTH, BOOKMARK_HEIGHT);
+                if (chapterPage < currentPage) {
+                    context.drawTexture(this.properties.texture, bookmarkX, bookmarkY, this.properties.bookmarkHiddenU, this.properties.bookmarkHiddenV + (hovered ? this.properties.bookmarkHeight : 0), this.properties.bookmarkHiddenWidth, this.properties.bookmarkHeight);
+                } else {
+                    context.drawTexture(this.properties.texture, bookmarkX, bookmarkY, this.properties.bookmarkHiddenU + this.properties.bookmarkHiddenWidth, this.properties.bookmarkHiddenV + (hovered ? this.properties.bookmarkHeight : 0), this.properties.bookmarkHiddenWidth, this.properties.bookmarkHeight);
+                }
             }
         }
 
@@ -160,14 +174,15 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        int currentPage = this.handler.currentPage.get();
         for (int i = 0; i < this.layout.chapterPages().size(); i++) {
-            int currentPage = this.handler.currentPage.get();
             int chapterPage = this.layout.chapterPages().getInt(i);
-            int bookmarkY = this.y + PAGE_Y + 4 + i * BOOKMARK_HEIGHT;
-            int bookmarkX = this.x + 256 / 2 + (chapterPage > currentPage ? FULL_BOOKMARK_WIDTH - HIDDEN_BOOKMARK_WIDTH : -FULL_BOOKMARK_WIDTH);
 
             if (chapterPage != currentPage) {
-                if (mouseX > bookmarkX && mouseX < bookmarkX + HIDDEN_BOOKMARK_WIDTH && mouseY > bookmarkY && mouseY < bookmarkY + BOOKMARK_HEIGHT) {
+                int bookmarkY = this.y + this.properties.getBookmarkY(i);
+                int bookmarkX = this.x + this.properties.getBookmarkX(chapterPage < currentPage);
+
+                if (mouseX > bookmarkX && mouseX < bookmarkX + this.properties.bookmarkHiddenWidth && mouseY > bookmarkY && mouseY < bookmarkY + this.properties.bookmarkHeight) {
                     ClientPlayNetworking.send(new UseBookmarkCustomPayload(chapterPage));
 
                     this.client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.ITEM_BOOK_PAGE_TURN, 1.0F));

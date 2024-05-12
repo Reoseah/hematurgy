@@ -1,4 +1,4 @@
-package io.github.reoseah.hematurgy.resource.book;
+package io.github.reoseah.hematurgy.resource.book_element;
 
 import it.unimi.dsi.fastutil.objects.ObjectIntPair;
 import net.minecraft.client.font.TextRenderer;
