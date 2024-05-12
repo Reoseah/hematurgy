@@ -1,7 +1,16 @@
 {
   "itemGroup.hematurgy": "Hematurgy",
   "item.hematurgy.hemonomicon": "Hemonomicon",
-
-  "hematurgy.test": "Test Title",
-  "hematurgy.test.0": "Quick brown fox jumps over the lazy dog. The lazy dog does not jump. \"To jump or not to jump?\" - that's not a question, says brown fox!"
+  "hematurgy.hemonomicon_title_page": "\n\n𝗛𝗘𝗠𝗢𝗡𝗢𝗠𝗜𝗖𝗢𝗡\n\nCꙩᴍᴘᴇɴᴅɪᴜᴍ ꙩɴ\nAʀᴛ ꙩꜰ Hᴇᴍᴀᴛᴜʀɢʏ\n\n- ◦ -\n\nᴛʜᴇ ꜰɪʀsᴛ ᴀɴᴅ ᴏɴʟʏ\nᴛʀᴜᴇ ᴛʀᴀɴsʟᴀᴛɪᴏɴ\nᴛᴏ ᴄᴏᴍᴍᴏɴ ᴛᴏɴɢᴜᴇ\n\n\nᴄᴏᴍᴍᴇɴᴛᴀʀʏ ʙʏ\nʀ. s. ʜ.",
+  "hematurgy.preface": "ᴘʀᴇꜰᴀᴄᴇ",
+  "hematurgy.preface.0": "My dear reader, I present to you the Hemonomicon, the greatest work of hematurgy ever written, admonished grimoire that has been hidden for centuries.",
+  "hematurgy.preface.1": "When I started my research, only excerpts from the Hemonomicon were known. The work was considered lost, with many of my colleagues doubting it ever existed.",
+  "hematurgy.preface.2": "But I wanted to find the truth. And so, I spent countless years tracking any lead I could find.",
+  "hematurgy.preface.3": "Most of the time the Hemonomicon was mentioned, it came only as a warning.",
+  "hematurgy.preface.4": "Nothing was ever told on the contents of the book, nor its origin or author. Only eloquent fancy descriptions of how presumably cursed it was.",
+  "hematurgy.preface.5": "At one point, I succumbed to despair. I lamented the time lost, silently praying to every god and devil I knew to give me anything for all the effort I put into this lifelong search.",
+  "hematurgy.preface.6": "And the next day, I a set of clay tablets in a long-dead language excavated at an ancient ritual site, came into my possession.",
+  "hematurgy.preface.7": "I began translating immediately, and the more I read, the more I realized what I was given.",
+  "hematurgy.preface.8": "Numerous spells, rituals, highly specific knowledge never before seen in the literature, the secrets of hematurgy long thought to be lost in the embrace of eternity, were laid before me.",
+  "hematurgy.preface.9": "I knew then that I had found it. Though I don't know whether or how complete it is, there is no doubt that the tablets content is at least in part the true Hemonomicon."
 }

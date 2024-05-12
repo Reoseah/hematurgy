@@ -12,6 +12,7 @@ public abstract class BookSplittableElement extends BookSimpleElement {
         int elementHeight = this.getHeight(properties.pageWidth, textRenderer);
 
         if (elementY + elementHeight > builder.getMaxY()
+                && builder.isWrapAllowed()
                 && this.canSplit(elementHeight, builder.getMaxY() - elementY, textRenderer)) {
             int elementX = builder.getCurrentX();
             int nextX = builder.getNextX();

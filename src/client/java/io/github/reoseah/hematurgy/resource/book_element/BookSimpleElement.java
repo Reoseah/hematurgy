@@ -11,7 +11,7 @@ public abstract class BookSimpleElement implements BookElement {
         int elementHeight = this.getHeight(properties.pageWidth, textRenderer);
 
         int elementY = builder.getCurrentY() + (builder.isNewPage() ? 0 : this.getVerticalGap());
-        if (elementY + elementHeight > builder.getMaxY() && !builder.isNewPage()) {
+        if (elementY + elementHeight > builder.getMaxY() && builder.isWrapAllowed() && !builder.isNewPage()) {
             builder.advancePage();
             elementY = builder.getCurrentY();
         }

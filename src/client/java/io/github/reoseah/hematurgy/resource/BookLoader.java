@@ -7,10 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
 import io.github.reoseah.hematurgy.Hematurgy;
-import io.github.reoseah.hematurgy.resource.book_element.BookElement;
-import io.github.reoseah.hematurgy.resource.book_element.ChapterMarker;
-import io.github.reoseah.hematurgy.resource.book_element.Heading;
-import io.github.reoseah.hematurgy.resource.book_element.Paragraph;
+import io.github.reoseah.hematurgy.resource.book_element.*;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.resource.Resource;
@@ -70,12 +67,27 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
     private static BookElement readElement(JsonObject json) {
         String type = JsonHelper.getString(json, "type");
         return switch (type) {
-//            case "title_page" -> new TitlePage(JsonHelper.getString(json, "translation_key"));
             case "heading" -> new Heading(JsonHelper.getString(json, "translation_key"));
             case "paragraph" -> new Paragraph(JsonHelper.getString(json, "translation_key"));
-//            case "page_break" -> new PageBreak();
-//            case "blank_verso_page" -> new BlankVersoPage();
+            case "page_break" -> new PageBreak();
             case "chapter" -> new ChapterMarker();
+            case "fold" -> {
+                JsonArray leftJson = JsonHelper.getArray(json, "left", new JsonArray());
+                JsonArray rightJson = JsonHelper.getArray(json, "right", new JsonArray());
+                BookSimpleElement[] left = readSimpleElements(leftJson);
+                BookSimpleElement[] right = readSimpleElements(rightJson);
+                yield new Fold(left, right);
+            }
+            case "vertically_centered" -> {
+                var element = readElement(JsonHelper.getObject(json, "element"));
+                if (element instanceof BookSimpleElement simple) {
+                    yield new VerticalCenterElement(simple);
+                } else {
+                    throw new JsonParseException("Cannot use special element here: " + element);
+                }
+            }
+//            case "title_page" -> new TitlePage(JsonHelper.getString(json, "translation_key"));
+//            case "blank_verso_page" -> new BlankVersoPage();
 //            case "utterance" -> {
 //                String translationKey = JsonHelper.getString(json, "translation_key");
 //                Identifier id = new Identifier(JsonHelper.getString(json, "id"));
@@ -117,20 +129,6 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
 //
 //                yield new BookInventory(height, background, slots);
 //            }
-//            case "non_breaking_group" -> {
-//                JsonArray elementsJson = JsonHelper.getArray(json, "elements");
-//                SimpleElement[] group = new SimpleElement[elementsJson.size()];
-//                for (int j = 0; j < elementsJson.size(); j++) {
-//                    JsonObject elementJson = JsonHelper.asObject(elementsJson.get(j), "element");
-//                    BookElement element = readElement(elementJson);
-//                    if (element instanceof SimpleElement simple) {
-//                        group[j] = simple;
-//                    } else {
-//                        throw new JsonParseException("Non-breaking group cannot contain special elements: " + element);
-//                    }
-//                }
-//                yield new Group(group);
-//            }
 //            case "illustration" -> {
 //                Identifier texture = new Identifier(JsonHelper.getString(json, "texture"));
 //                int u = JsonHelper.getInt(json, "u");
@@ -141,6 +139,19 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
 //            }
             default -> throw new JsonParseException("Unknown element type: " + type);
         };
+    }
+
+    private static BookSimpleElement[] readSimpleElements(JsonArray elementsJson) {
+        BookSimpleElement[] elements = new BookSimpleElement[elementsJson.size()];
+        for (int i = 0; i < elementsJson.size(); i++) {
+            var element = readElement(JsonHelper.asObject(elementsJson.get(i), "element"));
+            if (element instanceof BookSimpleElement simple) {
+                elements[i] = simple;
+            } else {
+                throw new JsonParseException("Cannot use special element here: " + element);
+            }
+        }
+        return elements;
     }
 
     @Override

@@ -50,6 +50,7 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
 
         private int currentPageIdx;
         private int currentY;
+        private boolean allowWrap = true;
 
         public Builder(BookProperties properties) {
             this.leftX = properties.leftPageOffset;
@@ -74,8 +75,10 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
         }
 
         public void advancePage() {
-            this.currentPageIdx++;
-            this.currentY = this.paddingTop;
+            if (this.allowWrap) {
+                this.currentPageIdx++;
+                this.currentY = this.paddingTop;
+            }
         }
 
         public boolean isNewPage() {
@@ -89,7 +92,7 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
         public void setCurrentY(int newY) {
             if (newY < this.getMaxY()) {
                 this.currentY = newY;
-            } else {
+            } else if (this.allowWrap) {
                 this.advancePage();
             }
         }
@@ -116,6 +119,14 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
 
         public int getCurrentChapter() {
             return this.chapterPages.size();
+        }
+
+        public boolean isWrapAllowed() {
+            return this.allowWrap;
+        }
+
+        public void allowWrap(boolean allowWrap) {
+            this.allowWrap = allowWrap;
         }
     }
 }
