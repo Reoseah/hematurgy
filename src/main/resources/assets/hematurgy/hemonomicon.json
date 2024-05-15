@@ -21,7 +21,7 @@
     { "type": "paragraph", "translation_key": "hematurgy.preface.8" },
     { "type": "paragraph", "translation_key": "hematurgy.preface.9" },
 
-    { "type": "chapter" },
+    { "type": "chapter", "translation_key": "hematurgy.on_the_nature_of_hematurgy.unformatted" },
     { "type": "heading", "translation_key": "hematurgy.on_the_nature_of_hematurgy" },
     { "type": "paragraph", "translation_key": "hematurgy.on_the_nature_of_hematurgy.0" },
     { "type": "page_break" },
@@ -41,6 +41,11 @@
     { "type": "paragraph", "translation_key": "hematurgy.branches.1" },
     { "type": "paragraph", "translation_key": "hematurgy.branches.2" },
     { "type": "paragraph", "translation_key": "hematurgy.branches.3" },
-    { "type": "paragraph", "translation_key": "hematurgy.branches.4" }
+    { "type": "paragraph", "translation_key": "hematurgy.branches.4" },
+
+    { "type": "chapter", "translation_key": "hematurgy.what_you_need_to_know_in_advance.unformatted"  },
+    { "type": "heading", "translation_key": "hematurgy.what_you_need_to_know_in_advance" },
+    { "type": "paragraph", "translation_key": "hematurgy.what_you_need_to_know_in_advance.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.what_you_need_to_know_in_advance.1" }
   ]
 }

@@ -14,6 +14,7 @@
   "hematurgy.preface.8": "Numerous spells, rituals, highly specific knowledge never before seen in the literature, the secrets of hematurgy long thought to be lost in the embrace of eternity, were laid before me.",
   "hematurgy.preface.9": "I knew then that I had found it. Though I don't know whether or how complete it is, there is no doubt that the tablets content is at least in part the true Hemonomicon.",
   "hematurgy.on_the_nature_of_hematurgy": "\n§li§r\n\nᴏɴ ᴛʜᴇ ɴᴀᴛᴜʀᴇ ᴏꜰ ʜᴇᴍᴀᴛᴜʀɢʏ",
+  "hematurgy.on_the_nature_of_hematurgy.unformatted": "On the Nature of Hematurgy",
   "hematurgy.on_the_nature_of_hematurgy.0": "This chapter is dedicated to the nature of hematurgy, the basic principles of the art and the fundamental concepts that govern it.",
   "hematurgy.hematurgy": "ʜᴇᴍᴀᴛᴜʀɢʏ",
   "hematurgy.hematurgy.0": "Hematurgy is the art of blood magic, the practice of using blood as a source of power for creating miracles. It is the first and oldest form of magic, and the most powerful.",
@@ -31,5 +32,9 @@
   "hematurgy.branches.1": "• Hemomancy uses blood both as a source of power and as its medium. It's the most common form of hematurgy, and the one that most people think of when they hear the word.",
   "hematurgy.branches.2": "• Hematurgical Artifice creates magical items by infusing them with lifeforce.",
   "hematurgy.branches.3": "• Hemomorphosis is the art of altering the body through rituals and infusions.",
-  "hematurgy.branches.4": "• Astral Hematurgy deals with the flow of life force in the cosmos and realms beyond. It always brings severe consequences to the hematurge. For centuries very little was known about it due to the loss of Hemonomicon."
+  "hematurgy.branches.4": "• Astral Hematurgy deals with the flow of life force in the cosmos and realms beyond. It always brings severe consequences to the hematurge. For centuries very little was known about it due to the loss of Hemonomicon.",
+  "hematurgy.what_you_need_to_know_in_advance": "\n§lii§r\n\nᴡʜᴀᴛ ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ᴋɴᴏᴡ ɪɴ ᴀᴅᴠᴀɴᴄᴇ",
+  "hematurgy.what_you_need_to_know_in_advance.unformatted": "What You Need to Know in Advance",
+  "hematurgy.what_you_need_to_know_in_advance.0": "This chapter shall give the knowledge needed to read Hemonomicon.",
+  "hematurgy.what_you_need_to_know_in_advance.1": "I insist that you study it carefully before advancing to the following chapters."
 }

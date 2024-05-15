@@ -2,6 +2,7 @@ package io.github.reoseah.hematurgy.resource;
 
 import io.github.reoseah.hematurgy.resource.book_element.BookElementWithSlots;
 import io.github.reoseah.hematurgy.resource.book_element.BookSlot;
+import io.github.reoseah.hematurgy.resource.book_element.Chapter;
 import it.unimi.dsi.fastutil.ints.*;
 import net.minecraft.client.gui.Drawable;
 
@@ -11,10 +12,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
-public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPages) {
-    public BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPages) {
+public record BookLayout(Int2ObjectMap<List<Drawable>> pages, Int2ObjectMap<Chapter> chapters) {
+    public BookLayout(Int2ObjectMap<List<Drawable>> pages, Int2ObjectMap<Chapter> chapters) {
         this.pages = Int2ObjectMaps.unmodifiable(pages);
-        this.chapterPages = IntLists.unmodifiable(chapterPages);
+        this.chapters = Int2ObjectMaps.unmodifiable(chapters);
     }
 
     public int getPageCount() {
@@ -46,7 +47,7 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
         private final int pageHeight;
 
         private final Int2ObjectMap<List<Drawable>> pages = new Int2ObjectArrayMap<>();
-        private final IntList chapterPages = new IntArrayList();
+        private final Int2ObjectMap<Chapter> chapters = new Int2ObjectArrayMap<>();
 
         private int currentPageIdx;
         private int currentY;
@@ -63,7 +64,7 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
         }
 
         public BookLayout build() {
-            return new BookLayout(this.pages, this.chapterPages);
+            return new BookLayout(this.pages, this.chapters);
         }
 
         public int getCurrentPage() {
@@ -113,12 +114,12 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, IntList chapterPag
             return this.paddingTop + this.pageHeight;
         }
 
-        public void markPageAsChapter() {
-            this.chapterPages.add(this.currentPageIdx);
+        public void markChapter(Chapter chapter) {
+            this.chapters.put(this.currentPageIdx, chapter);
         }
 
         public int getCurrentChapter() {
-            return this.chapterPages.size();
+            return this.chapters.size();
         }
 
         public boolean isWrapAllowed() {

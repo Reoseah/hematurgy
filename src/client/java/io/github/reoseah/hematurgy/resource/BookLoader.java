@@ -70,7 +70,7 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
             case "heading" -> new Heading(JsonHelper.getString(json, "translation_key"));
             case "paragraph" -> new Paragraph(JsonHelper.getString(json, "translation_key"));
             case "page_break" -> new PageBreak();
-            case "chapter" -> new ChapterMarker();
+            case "chapter" -> new Chapter(JsonHelper.getString(json, "translation_key"));
             case "fold" -> {
                 JsonArray leftJson = JsonHelper.getArray(json, "left", new JsonArray());
                 JsonArray rightJson = JsonHelper.getArray(json, "right", new JsonArray());

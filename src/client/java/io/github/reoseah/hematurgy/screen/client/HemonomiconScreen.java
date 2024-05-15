@@ -5,8 +5,12 @@ import io.github.reoseah.hematurgy.resource.BookLayout;
 import io.github.reoseah.hematurgy.resource.BookLoader;
 import io.github.reoseah.hematurgy.resource.BookProperties;
 import io.github.reoseah.hematurgy.resource.book_element.BookSlot;
+import io.github.reoseah.hematurgy.resource.book_element.Chapter;
 import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
 import io.github.reoseah.hematurgy.screen.MutableSlot;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
@@ -153,8 +157,9 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
         }
 
         int currentPage = this.handler.currentPage.get();
-        for (int i = 0; i < this.layout.chapterPages().size(); i++) {
-            int chapterPage = this.layout.chapterPages().getInt(i);
+        int i = 0;
+        for (Int2ObjectMap.Entry<Chapter> entry : this.layout.chapters().int2ObjectEntrySet()) {
+            int chapterPage = entry.getIntKey();
             if (chapterPage != currentPage) {
                 int bookmarkY = this.properties.getBookmarkY(i);
                 int bookmarkX = 256 / 2 + (chapterPage > currentPage ? this.properties.bookmarkFullWidth - this.properties.bookmarkHiddenWidth : -this.properties.bookmarkFullWidth);
@@ -166,7 +171,11 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
                 } else {
                     context.drawTexture(this.properties.texture, bookmarkX, bookmarkY, this.properties.bookmarkHiddenU + this.properties.bookmarkHiddenWidth, this.properties.bookmarkHiddenV + (hovered ? this.properties.bookmarkHeight : 0), this.properties.bookmarkHiddenWidth, this.properties.bookmarkHeight);
                 }
+                if (hovered) {
+                    context.drawTooltip(this.textRenderer, Text.translatable(entry.getValue().translationKey), mouseX, mouseY);
+                }
             }
+            i++;
         }
 
         context.getMatrices().pop();
@@ -175,8 +184,9 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         int currentPage = this.handler.currentPage.get();
-        for (int i = 0; i < this.layout.chapterPages().size(); i++) {
-            int chapterPage = this.layout.chapterPages().getInt(i);
+        int i = 0;
+        for (Int2ObjectMap.Entry<Chapter> entry : this.layout.chapters().int2ObjectEntrySet()) {
+            int chapterPage = entry.getIntKey();
 
             if (chapterPage != currentPage) {
                 int bookmarkY = this.y + this.properties.getBookmarkY(i);
@@ -189,6 +199,7 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
                     return true;
                 }
             }
+            i++;
         }
 
         for (Drawable drawable : this.leftPage) {
