@@ -86,14 +86,12 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
                     throw new JsonParseException("Cannot use special element here: " + element);
                 }
             }
-//            case "title_page" -> new TitlePage(JsonHelper.getString(json, "translation_key"));
-//            case "blank_verso_page" -> new BlankVersoPage();
-//            case "utterance" -> {
-//                String translationKey = JsonHelper.getString(json, "translation_key");
-//                Identifier id = new Identifier(JsonHelper.getString(json, "id"));
-//                int duration = JsonHelper.getInt(json, "duration");
-//                yield new Utterance(translationKey, id, duration);
-//            }
+            case "utterance" -> {
+                String translationKey = JsonHelper.getString(json, "translation_key");
+                Identifier id = new Identifier(JsonHelper.getString(json, "id"));
+                int duration = JsonHelper.getInt(json, "duration");
+                yield new Utterance(translationKey, id, duration);
+            }
 //            case "inventory" -> {
 //                JsonArray slotsJson = JsonHelper.getArray(json, "slots");
 //

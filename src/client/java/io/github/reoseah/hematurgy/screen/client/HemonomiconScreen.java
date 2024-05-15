@@ -1,6 +1,6 @@
 package io.github.reoseah.hematurgy.screen.client;
 
-import io.github.reoseah.hematurgy.network.UseBookmarkCustomPayload;
+import io.github.reoseah.hematurgy.network.UseBookmarkPayload;
 import io.github.reoseah.hematurgy.resource.BookLayout;
 import io.github.reoseah.hematurgy.resource.BookLoader;
 import io.github.reoseah.hematurgy.resource.BookProperties;
@@ -183,7 +183,7 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
                 int bookmarkX = this.x + this.properties.getBookmarkX(chapterPage < currentPage);
 
                 if (mouseX > bookmarkX && mouseX < bookmarkX + this.properties.bookmarkHiddenWidth && mouseY > bookmarkY && mouseY < bookmarkY + this.properties.bookmarkHeight) {
-                    ClientPlayNetworking.send(new UseBookmarkCustomPayload(chapterPage));
+                    ClientPlayNetworking.send(new UseBookmarkPayload(chapterPage));
 
                     this.client.getSoundManager().play(PositionedSoundInstance.master(SoundEvents.ITEM_BOOK_PAGE_TURN, 1.0F));
                     return true;

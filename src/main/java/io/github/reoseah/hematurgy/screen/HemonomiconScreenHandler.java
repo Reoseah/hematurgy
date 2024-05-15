@@ -25,6 +25,7 @@ public class HemonomiconScreenHandler extends ScreenHandler {
 
     public final Context context;
     public final Property currentPage;
+    public final Property isUttering;
 
     public HemonomiconScreenHandler(int syncId, PlayerInventory playerInv) {
         this(syncId, playerInv, new ClientContext());
@@ -34,8 +35,8 @@ public class HemonomiconScreenHandler extends ScreenHandler {
         super(TYPE, syncId);
         this.context = context;
         this.currentPage = this.addProperty(context.createProperty(HemonomiconItem.CURRENT_PAGE));
-//        this.addProperty(this.isUttering);
-//
+        this.isUttering = this.addProperty(Property.create());
+
 //        for (int i = 0; i < 16; i++) {
 //            this.addSlot(new HemonomiconSlot(this.inventory, i, Integer.MIN_VALUE, Integer.MIN_VALUE));
 //        }

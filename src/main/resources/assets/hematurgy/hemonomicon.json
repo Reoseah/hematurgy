@@ -20,41 +20,27 @@
     { "type": "paragraph", "translation_key": "hematurgy.preface.7" },
     { "type": "paragraph", "translation_key": "hematurgy.preface.8" },
     { "type": "paragraph", "translation_key": "hematurgy.preface.9" },
-    {
-      "type": "fold",
-      "left": [
-        { "type": "paragraph", "translation_key": "Forced left page" },
-        { "type": "heading", "translation_key": "hematurgy.test" },
-        { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-        { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-        { "type": "paragraph", "translation_key": "hematurgy.test.0" }
-      ],
-      "right": [
-        { "type": "paragraph", "translation_key": "Forced right page" },
-        { "type": "heading", "translation_key": "hematurgy.test" },
-        { "type": "paragraph", "translation_key": "hematurgy.test.0" }
-      ]
-    },
-    {
-      "type": "fold",
-      "right": [
-        { "type": "heading", "translation_key": "Blank verso test" },
-        { "type": "paragraph", "translation_key": "This should be on the right side and the left should be left blank" }
-      ]
-    },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
+
     { "type": "chapter" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "chapter" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" },
-    { "type": "chapter" },
-    { "type": "paragraph", "translation_key": "hematurgy.test.0" }
+    { "type": "heading", "translation_key": "hematurgy.on_the_nature_of_hematurgy" },
+    { "type": "paragraph", "translation_key": "hematurgy.on_the_nature_of_hematurgy.0" },
+    { "type": "page_break" },
+    { "type": "heading", "translation_key": "hematurgy.hematurgy" },
+    { "type": "paragraph", "translation_key": "hematurgy.hematurgy.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.hematurgy.1" },
+    { "type": "paragraph", "translation_key": "hematurgy.hematurgy.2" },
+    { "type": "paragraph", "translation_key": "hematurgy.hematurgy.3" },
+    { "type": "heading", "translation_key": "hematurgy.lifeblood" },
+    { "type": "paragraph", "translation_key": "hematurgy.lifeblood.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.lifeblood.1" },
+    { "type": "paragraph", "translation_key": "hematurgy.lifeblood.2" },
+    { "type": "paragraph", "translation_key": "hematurgy.lifeblood.3" },
+    { "type": "paragraph", "translation_key": "hematurgy.lifeblood.4" },
+    { "type": "heading", "translation_key": "hematurgy.branches" },
+    { "type": "paragraph", "translation_key": "hematurgy.branches.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.branches.1" },
+    { "type": "paragraph", "translation_key": "hematurgy.branches.2" },
+    { "type": "paragraph", "translation_key": "hematurgy.branches.3" },
+    { "type": "paragraph", "translation_key": "hematurgy.branches.4" }
   ]
 }
