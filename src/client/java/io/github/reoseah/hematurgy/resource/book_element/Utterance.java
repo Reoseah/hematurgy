@@ -2,6 +2,7 @@ package io.github.reoseah.hematurgy.resource.book_element;
 
 import io.github.reoseah.hematurgy.network.StartUtterancePayload;
 import io.github.reoseah.hematurgy.network.StopUtterancePayload;
+import io.github.reoseah.hematurgy.resource.BookProperties;
 import io.github.reoseah.hematurgy.screen.client.HemonomiconScreen;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
@@ -58,8 +59,8 @@ public class Utterance extends BookSimpleElement {
     }
 
     @Override
-    protected Drawable createWidget(int x, int y, int width, int maxHeight, TextRenderer textRenderer) {
-        return new UtteranceWidget(this.translationKey, x, y, width, maxHeight, textRenderer);
+    protected Drawable createWidget(int x, int y, BookProperties properties, int maxHeight, TextRenderer textRenderer) {
+        return new UtteranceWidget(this.translationKey, x, y, properties.pageWidth, textRenderer);
     }
 
     private class UtteranceWidget implements Drawable, Element {
@@ -78,7 +79,7 @@ public class Utterance extends BookSimpleElement {
         private boolean mouseDown = false;
         private long mouseDownTime = 0L;
 
-        public UtteranceWidget(String translationKey, int x, int y, int width, int height, TextRenderer textRenderer) {
+        public UtteranceWidget(String translationKey, int x, int y, int width, TextRenderer textRenderer) {
             this.textRenderer = textRenderer;
 
             MutableText text = Text.translatable(translationKey);
@@ -120,10 +121,10 @@ public class Utterance extends BookSimpleElement {
                 ctx.drawTexture(HemonomiconScreen.TEXTURE, buttonX, buttonY, 48, 194, BUTTON_WIDTH, BUTTON_HEIGHT);
             }
 
-            long mouseDownTime = this.mouseDown ? System.currentTimeMillis() - this.mouseDownTime : 0;
-            float progress = (mouseDownTime / 1000f / Utterance.this.duration);
+            float readTime = this.mouseDown ? (System.currentTimeMillis() - this.mouseDownTime) / 1000F : 0;
+            float ratio = (readTime / Utterance.this.duration);
 
-            if (progress > 1) {
+            if (ratio > 1) {
 //                ClientPlayNetworking.send(HemonomiconPackets.UTTERANCE, Util.make(
 //                        PacketByteBufs.create(),
 //                        buf -> buf.writeIdentifier(Utterance.this.id)
@@ -133,13 +134,13 @@ public class Utterance extends BookSimpleElement {
                 this.mouseDownTime = 0;
             }
 
-            int leftToRender = Math.round(progress * textLength);
+            int coloredCharacters = Math.round(this.textLength * ratio);
 
             for (int i = 0; i < lines.size(); i++) {
                 ctx.drawText(textRenderer, lines.get(i), x + BUTTON_WIDTH, linesY.getInt(i), 0x000000, false);
-                if (leftToRender > 0) {
-                    ctx.drawText(textRenderer, linesAsString.get(i).substring(0, Math.min(leftToRender, linesAsString.get(i).length())), x + BUTTON_WIDTH, linesY.getInt(i), 0xce1e00, false);
-                    leftToRender -= linesAsString.get(i).length();
+                if (coloredCharacters > 0) {
+                    ctx.drawText(textRenderer, linesAsString.get(i).substring(0, Math.min(coloredCharacters, linesAsString.get(i).length())), x + BUTTON_WIDTH, linesY.getInt(i), 0xce1e00, false);
+                    coloredCharacters -= linesAsString.get(i).length();
                 }
             }
         }

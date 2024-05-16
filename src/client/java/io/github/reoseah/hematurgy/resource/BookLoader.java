@@ -6,10 +6,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.JsonReader;
+import com.mojang.serialization.JsonOps;
 import io.github.reoseah.hematurgy.Hematurgy;
 import io.github.reoseah.hematurgy.resource.book_element.*;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.SinglePreparationResourceReloader;
@@ -92,41 +94,41 @@ public class BookLoader extends SinglePreparationResourceReloader<JsonObject> im
                 int duration = JsonHelper.getInt(json, "duration");
                 yield new Utterance(translationKey, id, duration);
             }
-//            case "inventory" -> {
-//                JsonArray slotsJson = JsonHelper.getArray(json, "slots");
-//
-//                if (slotsJson.size() >= 16) {
-//                    throw new JsonParseException("Too many slots for inventory element");
-//                }
-//
-//                BookSlot[] slots = new BookSlot[slotsJson.size()];
-//                for (int j = 0; j < slotsJson.size(); j++) {
-//                    JsonObject slot = JsonHelper.asObject(slotsJson.get(j), "slot");
-//                    int x = JsonHelper.getInt(slot, "x");
-//                    int y = JsonHelper.getInt(slot, "y");
-//                    Identifier background = slot.has("background") ? new Identifier(JsonHelper.getString(slot, "background")) : null;
-//                    boolean output = slot.has("output") && JsonHelper.getBoolean(slot, "output");
-//                    Ingredient ingredient = slot.has("ingredient") ? Ingredient.ALLOW_EMPTY_CODEC.parse(JsonOps.INSTANCE, slot.get("ingredient")).get().orThrow() : null;
-//
-//                    slots[j] = new BookSlot(x, y, output, ingredient, background);
-//                }
-//
-//                BookInventory.Image background = null;
-//                if (json.has("background")) {
-//                    JsonObject backgroundJson = JsonHelper.asObject(json.get("background"), "background");
-//                    Identifier texture = new Identifier(JsonHelper.getString(backgroundJson, "texture"));
-//                    int x = JsonHelper.getInt(backgroundJson, "x");
-//                    int y = JsonHelper.getInt(backgroundJson, "y");
-//                    int u = JsonHelper.getInt(backgroundJson, "u");
-//                    int v = JsonHelper.getInt(backgroundJson, "v");
-//                    int width = JsonHelper.getInt(backgroundJson, "width");
-//                    int height = JsonHelper.getInt(backgroundJson, "height");
-//                    background = new BookInventory.Image(texture, x, y, u, v, width, height);
-//                }
-//                int height = JsonHelper.getInt(json, "height", 0);
-//
-//                yield new BookInventory(height, background, slots);
-//            }
+            case "inventory" -> {
+                JsonArray slotsJson = JsonHelper.getArray(json, "slots");
+
+                if (slotsJson.size() >= 16) {
+                    throw new JsonParseException("Too many slots for inventory element");
+                }
+
+                SlotConfiguration[] slots = new SlotConfiguration[slotsJson.size()];
+                for (int j = 0; j < slotsJson.size(); j++) {
+                    JsonObject slot = JsonHelper.asObject(slotsJson.get(j), "slot");
+                    int x = JsonHelper.getInt(slot, "x");
+                    int y = JsonHelper.getInt(slot, "y");
+                    Identifier background = slot.has("background") ? new Identifier(JsonHelper.getString(slot, "background")) : null;
+                    boolean output = slot.has("output") && JsonHelper.getBoolean(slot, "output");
+                    Ingredient ingredient = slot.has("ingredient") ? Ingredient.ALLOW_EMPTY_CODEC.parse(JsonOps.INSTANCE, slot.get("ingredient")).getOrThrow() : null;
+
+                    slots[j] = new SlotConfiguration(x, y, output, ingredient, background);
+                }
+
+                BookInventory.Image background = null;
+                if (json.has("background")) {
+                    JsonObject backgroundJson = JsonHelper.asObject(json.get("background"), "background");
+                    Identifier texture = new Identifier(JsonHelper.getString(backgroundJson, "texture"));
+                    int x = JsonHelper.getInt(backgroundJson, "x");
+                    int y = JsonHelper.getInt(backgroundJson, "y");
+                    int u = JsonHelper.getInt(backgroundJson, "u");
+                    int v = JsonHelper.getInt(backgroundJson, "v");
+                    int width = JsonHelper.getInt(backgroundJson, "width");
+                    int height = JsonHelper.getInt(backgroundJson, "height");
+                    background = new BookInventory.Image(texture, x, y, u, v, width, height);
+                }
+                int height = JsonHelper.getInt(json, "height", 0);
+
+                yield new BookInventory(height, background, slots);
+            }
 //            case "illustration" -> {
 //                Identifier texture = new Identifier(JsonHelper.getString(json, "texture"));
 //                int u = JsonHelper.getInt(json, "u");

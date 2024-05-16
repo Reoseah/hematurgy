@@ -6,18 +6,18 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 
-public class BookSlot {
+public class SlotConfiguration {
     public final int x;
     public final int y;
     public final boolean output;
     protected final Ingredient ingredient;
     protected final Identifier background;
 
-    public BookSlot(int x, int y, boolean output, Ingredient ingredient) {
+    public SlotConfiguration(int x, int y, boolean output, Ingredient ingredient) {
         this(x, y, output, ingredient, null);
     }
 
-    public BookSlot(int x, int y, boolean output, Ingredient ingredient, Identifier background) {
+    public SlotConfiguration(int x, int y, boolean output, Ingredient ingredient, Identifier background) {
         this.x = x;
         this.y = y;
         this.background = background;
@@ -29,8 +29,8 @@ public class BookSlot {
         return this.background != null ? Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, this.background) : null;
     }
 
-    public BookSlot withOffset(int x, int y) {
-        return new BookSlot(this.x + x, this.y + y, this.output, this.ingredient, this.background);
+    public SlotConfiguration withOffset(int x, int y) {
+        return new SlotConfiguration(this.x + x, this.y + y, this.output, this.ingredient, this.background);
     }
 
     public void write(RegistryByteBuf buf) {
@@ -45,12 +45,12 @@ public class BookSlot {
         }
     }
 
-    public static BookSlot read(RegistryByteBuf buf) {
+    public static SlotConfiguration read(RegistryByteBuf buf) {
         int x = buf.readVarInt();
         int y = buf.readVarInt();
         boolean output = buf.readBoolean();
         Ingredient ingredient = buf.readBoolean() ? Ingredient.PACKET_CODEC.decode(buf) : null;
 
-        return new BookSlot(x, y, output, ingredient);
+        return new SlotConfiguration(x, y, output, ingredient);
     }
 }

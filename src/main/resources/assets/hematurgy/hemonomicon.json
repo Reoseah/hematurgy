@@ -46,6 +46,40 @@
     { "type": "chapter", "translation_key": "hematurgy.what_you_need_to_know_in_advance.unformatted"  },
     { "type": "heading", "translation_key": "hematurgy.what_you_need_to_know_in_advance" },
     { "type": "paragraph", "translation_key": "hematurgy.what_you_need_to_know_in_advance.0" },
-    { "type": "paragraph", "translation_key": "hematurgy.what_you_need_to_know_in_advance.1" }
+    { "type": "paragraph", "translation_key": "hematurgy.what_you_need_to_know_in_advance.1" },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.ritual_sickle" },
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_sickle.0" },
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_sickle.1" }
+      ],
+      "right": [
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_sickle.2" }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "item.hematurgy.ritual_sickle" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 27, "y": 0, "ingredient": { "item": "minecraft:iron_ingot" }, "background": "hematurgy:item/placeholder/ingot" },
+            { "x": 27, "y": 18, "ingredient": { "item": "minecraft:iron_ingot" }, "background": "hematurgy:item/placeholder/ingot" },
+            { "x": 9, "y": 27, "ingredient": { "item": "minecraft:netherite_scrap" }, "background": "hematurgy:item/placeholder/netherite_scrap" },
+            { "x": 70, "y": 14, "output": true, "background": "hematurgy:item/placeholder/ritual_sickle" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 17, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.ritual_sickle.utterance", "id": "hematurgy:recipe/ritual_sickle", "duration": 10 }
+      ],
+      "right": [
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_sickle.3" }
+      ]
+    },
+    { "type": "heading", "translation_key": "hematurgy.ash" },
+    { "type": "paragraph", "translation_key": "hematurgy.ash.0" },
+    { "type": "page_break" }
   ]
 }

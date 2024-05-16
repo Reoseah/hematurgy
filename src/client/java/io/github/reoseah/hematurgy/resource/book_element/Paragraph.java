@@ -1,5 +1,6 @@
 package io.github.reoseah.hematurgy.resource.book_element;
 
+import io.github.reoseah.hematurgy.resource.BookProperties;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.text.MutableText;
@@ -21,10 +22,10 @@ public class Paragraph extends BookSplittableElement {
     }
 
     @Override
-    protected Drawable createWidget(int x, int y, int width, int maxHeight, TextRenderer textRenderer) {
+    protected Drawable createWidget(int x, int y, BookProperties properties, int maxHeight, TextRenderer textRenderer) {
         MutableText translated = Text.translatable(this.translationKey);
 
-        List<OrderedText> lines = textRenderer.wrapLines(translated, width);
+        List<OrderedText> lines = textRenderer.wrapLines(translated, properties.pageWidth);
         return (matrices, mouseX, mouseY, delta) -> {
             for (int i = 0; i < lines.size(); i++) {
                 matrices.drawText(textRenderer, lines.get(i), x, y + i * textRenderer.fontHeight, 0x000000, false);

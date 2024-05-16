@@ -1,6 +1,7 @@
 {
   "itemGroup.hematurgy": "Hematurgy",
   "item.hematurgy.hemonomicon": "Hemonomicon",
+  "item.hematurgy.ritual_sickle": "Ritual Sickle",
   "hematurgy.hemonomicon_title_page": "\n\n𝗛𝗘𝗠𝗢𝗡𝗢𝗠𝗜𝗖𝗢𝗡\n\nCꙩᴍᴘᴇɴᴅɪᴜᴍ ꙩɴ\nAʀᴛ ꙩꜰ Hᴇᴍᴀᴛᴜʀɢʏ\n\n- ◦ -\n\nᴛʜᴇ ꜰɪʀsᴛ ᴀɴᴅ ᴏɴʟʏ\nᴛʀᴜᴇ ᴛʀᴀɴsʟᴀᴛɪᴏɴ\nᴛᴏ ᴄᴏᴍᴍᴏɴ ᴛᴏɴɢᴜᴇ\n\n\nᴄᴏᴍᴍᴇɴᴛᴀʀʏ ʙʏ\nʀ. s. ʜ.",
   "hematurgy.preface": "ᴘʀᴇꜰᴀᴄᴇ",
   "hematurgy.preface.0": "My dear reader, I present to you the Hemonomicon, the greatest work of hematurgy ever written, admonished grimoire that's been hiding for centuries.",
@@ -36,5 +37,13 @@
   "hematurgy.what_you_need_to_know_in_advance": "\n§lii§r\n\nᴡʜᴀᴛ ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ᴋɴᴏᴡ ɪɴ ᴀᴅᴠᴀɴᴄᴇ",
   "hematurgy.what_you_need_to_know_in_advance.unformatted": "What You Need to Know in Advance",
   "hematurgy.what_you_need_to_know_in_advance.0": "This chapter shall give the knowledge needed to read Hemonomicon.",
-  "hematurgy.what_you_need_to_know_in_advance.1": "I insist that you study it carefully before advancing to the following chapters."
+  "hematurgy.what_you_need_to_know_in_advance.1": "I insist that you study it carefully before advancing to the following chapters.",
+  "hematurgy.ritual_sickle": "ʀɪᴛᴜᴀʟ sɪᴄᴋʟᴇ",
+  "hematurgy.ritual_sickle.0": "As said earlier, lifeblood dissipates too quickly if not collected with special technique.",
+  "hematurgy.ritual_sickle.1": "The ritual sickle is the simplest of the tools that allow the hematurge to correctly extract the blood, allowing it to be used in hematurgy.",
+  "hematurgy.ritual_sickle.2": "It shall be made of iron body and ardent handle engraved with special runes as given on the next page. Then it is consecrated by chanting the spell.",
+  "hematurgy.ritual_sickle.utterance": "Gɪᴅɪᴍ ɴᴇʀɢᴀʟ ᴀɴᴜ\n\nLɪᴍ ᴘᴀᴢᴜᴢᴜ ᴀᴢᴀᴋ'ᴋᴜ!\n\nSᴀ ɪɴᴀ ǫᴇʀʙᴜ ᴋɪᴢᴘᴜᴜ sᴜ ᴀᴍᴀᴇʟᴜ ɴᴇǫɪᴅᴜ!",
+  "hematurgy.ritual_sickle.3": "Apart from delaying blood decay of the killed, the sickle can collect and hold onto small amounts of blood with no long lasting effects for the source. Although not enough to power a ritual, it can hemopathically link to the blood owner, directing effects of some rituals.",
+  "hematurgy.ash": "ᴀsʜ",
+  "hematurgy.ash.0": "Ash is a common component in hematurgical rituals and intermediate product for other preparations. Specifically, ash for the rituals is made by burning young, healthy saplings."
 }

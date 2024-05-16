@@ -17,11 +17,15 @@ public final class BookProperties {
     public final int bookmarkHiddenWidth;
     public final int bookmarkHiddenU;
     public final int bookmarkHiddenV;
+    public final int slotU;
+    public final int slotV;
+    public final int resultSlotU;
+    public final int resultSlotV;
 
     public BookProperties(Identifier texture, int pageWidth, int pageHeight, int topOffset, int leftPageOffset,
                           int rightPageOffset, int bookmarkOffset, int bookmarkHeight, int bookmarkFullWidth,
                           int bookmarkFullU, int bookmarkFullV, int bookmarkHiddenWidth, int bookmarkHiddenU,
-                          int bookmarkHiddenV) {
+                          int bookmarkHiddenV, int slotU, int slotV, int resultSlotU, int resultSlotV) {
         this.texture = texture;
         this.pageWidth = pageWidth;
         this.pageHeight = pageHeight;
@@ -36,6 +40,10 @@ public final class BookProperties {
         this.bookmarkHiddenWidth = bookmarkHiddenWidth;
         this.bookmarkHiddenU = bookmarkHiddenU;
         this.bookmarkHiddenV = bookmarkHiddenV;
+        this.slotU = slotU;
+        this.slotV = slotV;
+        this.resultSlotU = resultSlotU;
+        this.resultSlotV = resultSlotV;
     }
 
     public int getBookmarkY(int idx) {

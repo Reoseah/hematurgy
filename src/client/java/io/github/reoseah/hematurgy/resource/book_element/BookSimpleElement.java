@@ -16,7 +16,7 @@ public abstract class BookSimpleElement implements BookElement {
             elementY = builder.getCurrentY();
         }
         int elementX = builder.getCurrentX();
-        Drawable renderer = this.createWidget(elementX, elementY, properties.pageWidth, builder.getMaxY() - elementY, textRenderer);
+        Drawable renderer = this.createWidget(elementX, elementY, properties, builder.getMaxY() - elementY, textRenderer);
         builder.addWidget(renderer);
         builder.setCurrentY(elementY + elementHeight);
     }
@@ -34,13 +34,13 @@ public abstract class BookSimpleElement implements BookElement {
     protected abstract int getHeight(int width, TextRenderer textRenderer);
 
     /**
-     * Returns a drawable for this element.
+     * Return a renderer for this element.
      * <p>
-     * Implement {@link net.minecraft.client.gui.Element} to also handle mouse events,
-     * {@link BookElementWithSlots} to have item slots.
+     * Optionally, implement {@link net.minecraft.client.gui.Element} to also handle mouse events,
+     * {@link SlotConfigurationProvider} to configure screen handler slots.
      *
      * @see net.minecraft.client.gui.Element
-     * @see BookElementWithSlots
+     * @see SlotConfigurationProvider
      */
-    protected abstract Drawable createWidget(int x, int y, int width, int maxHeight, TextRenderer textRenderer);
+    protected abstract Drawable createWidget(int x, int y, BookProperties properties, int maxHeight, TextRenderer textRenderer);
 }

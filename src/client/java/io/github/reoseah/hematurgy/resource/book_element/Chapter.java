@@ -4,7 +4,6 @@ package io.github.reoseah.hematurgy.resource.book_element;
 import io.github.reoseah.hematurgy.resource.BookLayout;
 import io.github.reoseah.hematurgy.resource.BookProperties;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.text.Text;
 
 public class Chapter implements BookElement {
     public final String translationKey;

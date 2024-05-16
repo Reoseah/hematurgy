@@ -1,5 +1,6 @@
 package io.github.reoseah.hematurgy.resource.book_element;
 
+import io.github.reoseah.hematurgy.resource.BookProperties;
 import it.unimi.dsi.fastutil.objects.ObjectIntPair;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -29,12 +30,12 @@ public class Heading extends BookSimpleElement {
     }
 
     @Override
-    protected Drawable createWidget(int x, int y, int width, int maxHeight, TextRenderer textRenderer) {
+    protected Drawable createWidget(int x, int y, BookProperties properties, int maxHeight, TextRenderer textRenderer) {
         MutableText translated = Text.translatable(this.translationKey);
-        List<OrderedText> lines = textRenderer.wrapLines(translated, width);
+        List<OrderedText> lines = textRenderer.wrapLines(translated, properties.pageWidth);
         List<ObjectIntPair<OrderedText>> centeredLines = new ArrayList<>(lines.size());
         for (OrderedText text : lines) {
-            centeredLines.add(ObjectIntPair.of(text, x + (width - textRenderer.getWidth(text)) / 2));
+            centeredLines.add(ObjectIntPair.of(text, x + (properties.pageWidth - textRenderer.getWidth(text)) / 2));
         }
         return (DrawContext ctx, int mouseX, int mouseY, float delta) -> {
             for (int i = 0; i < centeredLines.size(); i++) {

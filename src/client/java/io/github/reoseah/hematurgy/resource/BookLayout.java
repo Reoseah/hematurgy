@@ -1,9 +1,11 @@
 package io.github.reoseah.hematurgy.resource;
 
-import io.github.reoseah.hematurgy.resource.book_element.BookElementWithSlots;
-import io.github.reoseah.hematurgy.resource.book_element.BookSlot;
+import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
+import io.github.reoseah.hematurgy.resource.book_element.SlotConfigurationProvider;
 import io.github.reoseah.hematurgy.resource.book_element.Chapter;
-import it.unimi.dsi.fastutil.ints.*;
+import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;
 import net.minecraft.client.gui.Drawable;
 
 import java.util.ArrayList;
@@ -26,16 +28,16 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, Int2ObjectMap<Chap
         return this.pages.getOrDefault(page, Collections.emptyList());
     }
 
-    public BookSlot[] getFoldSlots(int leftPage) {
+    public SlotConfiguration[] getFoldSlots(int leftPage) {
         // TODO build and keep a separate map of slots per page
-        Stream<BookSlot> leftSlots = this.getPage(leftPage).stream()
-                .filter(drawable -> drawable instanceof BookElementWithSlots)
-                .flatMap(drawable -> Arrays.stream(((BookElementWithSlots) drawable).getSlots()));
-        Stream<BookSlot> rightSlots = this.getPage(leftPage + 1).stream()
-                .filter(drawable -> drawable instanceof BookElementWithSlots)
-                .flatMap(drawable -> Arrays.stream(((BookElementWithSlots) drawable).getSlots()));
+        Stream<SlotConfiguration> leftSlots = this.getPage(leftPage).stream()
+                .filter(drawable -> drawable instanceof SlotConfigurationProvider)
+                .flatMap(drawable -> Arrays.stream(((SlotConfigurationProvider) drawable).getSlots()));
+        Stream<SlotConfiguration> rightSlots = this.getPage(leftPage + 1).stream()
+                .filter(drawable -> drawable instanceof SlotConfigurationProvider)
+                .flatMap(drawable -> Arrays.stream(((SlotConfigurationProvider) drawable).getSlots()));
 
-        return Stream.concat(leftSlots, rightSlots).limit(16).toArray(BookSlot[]::new);
+        return Stream.concat(leftSlots, rightSlots).limit(16).toArray(SlotConfiguration[]::new);
     }
 
     public static class Builder {

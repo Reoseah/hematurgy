@@ -4,13 +4,11 @@ import io.github.reoseah.hematurgy.network.UseBookmarkPayload;
 import io.github.reoseah.hematurgy.resource.BookLayout;
 import io.github.reoseah.hematurgy.resource.BookLoader;
 import io.github.reoseah.hematurgy.resource.BookProperties;
-import io.github.reoseah.hematurgy.resource.book_element.BookSlot;
 import io.github.reoseah.hematurgy.resource.book_element.Chapter;
+import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
 import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
 import io.github.reoseah.hematurgy.screen.MutableSlot;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
@@ -54,7 +52,7 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
     private static final int RESULT_SLOT_U = 176;
     private static final int RESULT_SLOT_V = 224;
 
-    private final BookProperties properties = new BookProperties(TEXTURE, PAGE_WIDTH, PAGE_HEIGHT, TOP_OFFSET, LEFT_PAGE_OFFSET, RIGHT_PAGE_OFFSET, BOOKMARK_OFFSET, BOOKMARK_HEIGHT, FULL_BOOKMARK_WIDTH, FULL_BOOKMARK_U, FULL_BOOKMARK_V, HIDDEN_BOOKMARK_WIDTH, HIDDEN_BOOKMARK_U, HIDDEN_BOOKMARK_V);
+    private final BookProperties properties = new BookProperties(TEXTURE, PAGE_WIDTH, PAGE_HEIGHT, TOP_OFFSET, LEFT_PAGE_OFFSET, RIGHT_PAGE_OFFSET, BOOKMARK_OFFSET, BOOKMARK_HEIGHT, FULL_BOOKMARK_WIDTH, FULL_BOOKMARK_U, FULL_BOOKMARK_V, HIDDEN_BOOKMARK_WIDTH, HIDDEN_BOOKMARK_U, HIDDEN_BOOKMARK_V, SLOT_U, SLOT_V, RESULT_SLOT_U, RESULT_SLOT_V);
     private BookLayout layout;
 
     private PageTurnWidget previousPageButton;
@@ -118,9 +116,9 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
     }
 
     private void updateSlots() {
-        BookSlot[] slots = this.layout.getFoldSlots(this.handler.currentPage.get());
+        SlotConfiguration[] slots = this.layout.getFoldSlots(this.handler.currentPage.get());
 
-//        this.handler.updateSlots(slots);
+        this.handler.configureSlots(slots);
 //        ClientPlayNetworking.send(HemonomiconPackets.PAGE_SLOTS, Util.make(PacketByteBufs.create(), buf -> {
 //            buf.writeVarInt(slots.length);
 //            for (SlotDefinition slot : slots) {
@@ -171,14 +169,37 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
                 } else {
                     context.drawTexture(this.properties.texture, bookmarkX, bookmarkY, this.properties.bookmarkHiddenU + this.properties.bookmarkHiddenWidth, this.properties.bookmarkHiddenV + (hovered ? this.properties.bookmarkHeight : 0), this.properties.bookmarkHiddenWidth, this.properties.bookmarkHeight);
                 }
-                if (hovered) {
-                    context.drawTooltip(this.textRenderer, Text.translatable(entry.getValue().translationKey), mouseX, mouseY);
-                }
+//                if (hovered) {
+//                    context.drawTooltip(this.textRenderer, Text.translatable(entry.getValue().translationKey), mouseX, mouseY);
+//                }
             }
             i++;
         }
 
         context.getMatrices().pop();
+    }
+
+    protected void drawMouseoverTooltip(DrawContext context, int x, int y) {
+        super.drawMouseoverTooltip(context, x, y);
+
+        x -= this.x;
+        y -= this.y;
+        int currentPage = this.handler.currentPage.get();
+        int i = 0;
+        for (Int2ObjectMap.Entry<Chapter> entry : this.layout.chapters().int2ObjectEntrySet()) {
+            int chapterPage = entry.getIntKey();
+            if (chapterPage != currentPage) {
+                int bookmarkY = this.properties.getBookmarkY(i);
+                int bookmarkX = 256 / 2 + (chapterPage > currentPage ? this.properties.bookmarkFullWidth - this.properties.bookmarkHiddenWidth : -this.properties.bookmarkFullWidth);
+
+                boolean hovered = x > bookmarkX && x < bookmarkX + this.properties.bookmarkHiddenWidth && y > bookmarkY && y < bookmarkY + this.properties.bookmarkHeight;
+
+                if (hovered) {
+                    context.drawTooltip(this.textRenderer, Text.translatable(entry.getValue().translationKey), this.x + x, this.y + y);
+                }
+            }
+            i++;
+        }
     }
 
     @Override

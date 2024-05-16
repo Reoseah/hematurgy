@@ -1,12 +1,15 @@
 package io.github.reoseah.hematurgy.screen;
 
 import io.github.reoseah.hematurgy.item.HemonomiconItem;
+import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
 import net.minecraft.block.LecternBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LecternBlockEntity;
 import net.minecraft.component.DataComponentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.Property;
@@ -26,6 +29,7 @@ public class HemonomiconScreenHandler extends ScreenHandler {
     public final Context context;
     public final Property currentPage;
     public final Property isUttering;
+    public final Inventory inventory = new HemonomiconInventory(this);
 
     public HemonomiconScreenHandler(int syncId, PlayerInventory playerInv) {
         this(syncId, playerInv, new ClientContext());
@@ -37,9 +41,9 @@ public class HemonomiconScreenHandler extends ScreenHandler {
         this.currentPage = this.addProperty(context.createProperty(HemonomiconItem.CURRENT_PAGE));
         this.isUttering = this.addProperty(Property.create());
 
-//        for (int i = 0; i < 16; i++) {
-//            this.addSlot(new HemonomiconSlot(this.inventory, i, Integer.MIN_VALUE, Integer.MIN_VALUE));
-//        }
+        for (int i = 0; i < 16; i++) {
+            this.addSlot(new ConfigurableSlot(this.inventory, i, Integer.MIN_VALUE, Integer.MIN_VALUE));
+        }
 
         for (int x = 0; x < 9; x++) {
             this.addSlot(new Slot(playerInv, x, 48 + x * 18, 185));
@@ -89,6 +93,14 @@ public class HemonomiconScreenHandler extends ScreenHandler {
 //            }
         }
         return false;
+    }
+    public void configureSlots(SlotConfiguration[] definitions) {
+        for (int i = 0; i < definitions.length; i++) {
+            ((ConfigurableSlot) this.slots.get(i)).setConfiguration(definitions[i]);
+        }
+        for (int i = definitions.length; i < 16; i++) {
+            ((ConfigurableSlot) this.slots.get(i)).setConfiguration(null);
+        }
     }
 
     public static abstract class Context {
@@ -195,5 +207,27 @@ public class HemonomiconScreenHandler extends ScreenHandler {
 //        public ActivitySource getActivitySource() {
 //            return null;
 //        }
+    }
+
+    private static class HemonomiconInventory extends SimpleInventory {
+        private final ScreenHandler handler;
+
+        public HemonomiconInventory(ScreenHandler handler) {
+            super(16);
+            this.handler = handler;
+        }
+
+        public ItemStack removeStack(int slot, int amount) {
+            ItemStack stack = super.removeStack(slot, amount);
+            if (!stack.isEmpty()) {
+                this.handler.onContentChanged(this);
+            }
+            return stack;
+        }
+
+        public void setStack(int slot, ItemStack stack) {
+            super.setStack(slot, stack);
+            this.handler.onContentChanged(this);
+        }
     }
 }
