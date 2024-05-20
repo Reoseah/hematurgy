@@ -80,6 +80,48 @@
     },
     { "type": "heading", "translation_key": "hematurgy.ash" },
     { "type": "paragraph", "translation_key": "hematurgy.ash.0" },
-    { "type": "page_break" }
+    { "type": "paragraph", "translation_key": "hematurgy.ash.1" },
+    { "type": "page_break" },
+    { "type": "heading", "translation_key": "hematurgy.blood_salt" },
+    { "type": "paragraph", "translation_key": "hematurgy.blood_salt.0" },
+    { "type": "paragraph", "translation_key": "hematurgy.blood_salt.1" },
+    { "type": "chapter", "translation_key": "hematurgy.hemomancy.unformatted"  },
+    { "type": "heading", "translation_key": "hematurgy.hemomancy" },
+    { "type": "paragraph", "translation_key": "hematurgy.hemomancy.0" },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.draw_blood" },
+        { "type": "paragraph", "translation_key": "hematurgy.draw_blood.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.draw_blood.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.blood" },
+        { "type": "inventory", "slots": [ { "x": 42, "y": 4, "output": true, "background": "hematurgy:item/placeholder/blood" } ] },
+        { "type": "utterance", "translation_key": "hematurgy.draw_blood.utterance", "id": "hematurgy:recipe/draw_blood", "duration": 5 }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.hemoalchemical_poison" },
+        { "type": "paragraph", "translation_key": "hematurgy.hemoalchemical_poison.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.hemoalchemical_poison.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.hemoalchemical_poison.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.hemoalchemical_poison" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 9, "y": 4, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 27, "y": 4, "ingredient": { "item": "hematurgy:ash" }, "background": "hematurgy:item/placeholder/dust" },
+            { "x": 70, "y": 4, "output": true, "background": "hematurgy:item/placeholder/hemoalchemical_poison" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 6, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.hemoalchemical_poison.utterance", "id": "hematurgy:recipe/hemoalchemical_poison", "duration": 7 }
+      ]
+    }
   ]
 }

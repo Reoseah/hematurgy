@@ -2,7 +2,13 @@
   "required": true,
   "package": "io.github.reoseah.hematurgy.mixin.client",
   "compatibilityLevel": "JAVA_21",
-  "client": ["BuiltinItemModelRendererMixin", "InGameHudMixin", "ItemRendererMixin", "LecternBlockEntityRendererMixin"],
+  "client": [
+    "BuiltinItemModelRendererMixin",
+    "DecayingItemMixin",
+    "InGameHudMixin",
+    "ItemRendererMixin",
+    "LecternBlockEntityRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

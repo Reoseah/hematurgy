@@ -1,5 +1,6 @@
 package io.github.reoseah.hematurgy;
 
+import io.github.reoseah.hematurgy.item.DecayingItem;
 import io.github.reoseah.hematurgy.item.HemonomiconItem;
 import io.github.reoseah.hematurgy.network.HemonomiconNetworking;
 import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
@@ -12,6 +13,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.LecternBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LecternBlockEntity;
+import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -38,11 +42,36 @@ import org.slf4j.LoggerFactory;
 public class Hematurgy implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("hematurgy");
 
+
+    public static final Item ASH = new Item(new Item.Settings());
+    public static final Item BLOOD_SALT_MIXTURE = new Item(new Item.Settings());
+    public static final Item BLOOD_SALT = new Item(new Item.Settings());
+    public static final Item DECAYED_BLOOD = new Item(new Item.Settings());
+    public static final Item BLOOD = new DecayingItem(20 * 30, DECAYED_BLOOD, new Item.Settings().maxCount(16).component(DecayingItem.CREATION_TIME, null).food(new FoodComponent.Builder() //
+            .nutrition(1) //
+            .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 20 * 30, 1), 1) //
+            .alwaysEdible().build()));
+    public static final Item HEMOALCHEMICAL_POISON = new Item(new Item.Settings()
+            .food(new FoodComponent.Builder() //
+                    .statusEffect(new StatusEffectInstance(StatusEffects.POISON, 20 * 30, 3), 1) //
+                    .statusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20 * 30, 3), 1) //
+                    .statusEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 20 * 30, 3), 1) //
+                    .statusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 30, 3), 1) //
+                    .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 20 * 30), 1) //
+                    .alwaysEdible()
+                    .build()));
+
     public static final ItemGroup ITEM_GROUP = FabricItemGroup.builder()
             .displayName(Text.translatable("itemGroup.hematurgy"))
             .icon(() -> new ItemStack(HemonomiconItem.INSTANCE))
             .entries((context, entries) -> {
                 entries.add(HemonomiconItem.INSTANCE);
+                entries.add(BLOOD);
+                entries.add(ASH);
+                entries.add(BLOOD_SALT_MIXTURE);
+                entries.add(BLOOD_SALT);
+                entries.add(DECAYED_BLOOD);
+                entries.add(HEMOALCHEMICAL_POISON);
             })
             .build();
 
@@ -53,8 +82,15 @@ public class Hematurgy implements ModInitializer {
         LOGGER.info("Start initialization...");
 
         Registry.register(Registries.ITEM, "hematurgy:hemonomicon", HemonomiconItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:blood", BLOOD);
+        Registry.register(Registries.ITEM, "hematurgy:ash", ASH);
+        Registry.register(Registries.ITEM, "hematurgy:blood_salt_mixture", BLOOD_SALT_MIXTURE);
+        Registry.register(Registries.ITEM, "hematurgy:blood_salt", BLOOD_SALT);
+        Registry.register(Registries.ITEM, "hematurgy:decayed_blood", DECAYED_BLOOD);
+        Registry.register(Registries.ITEM, "hematurgy:hemoalchemical_poison", HEMOALCHEMICAL_POISON);
 
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:current_page", HemonomiconItem.CURRENT_PAGE);
+        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:creation_time", DecayingItem.CREATION_TIME);
 
         Registry.register(Registries.ITEM_GROUP, "hematurgy:main", ITEM_GROUP);
 
