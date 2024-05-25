@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hematurgy:item/sentient_blade"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hematurgy:has_target": 1
+      },
+      "model": "hematurgy:item/sentient_blade_with_blood"
+    }
+  ]
+}

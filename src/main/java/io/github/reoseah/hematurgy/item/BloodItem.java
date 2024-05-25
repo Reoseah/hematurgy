@@ -1,8 +1,12 @@
 package io.github.reoseah.hematurgy.item;
 
 import com.mojang.serialization.Codec;
+import io.github.reoseah.hematurgy.Hematurgy;
 import net.minecraft.component.DataComponentType;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.Item;
@@ -16,13 +20,18 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class DecayingItem extends Item {
+public class BloodItem extends Item {
     public static final DataComponentType<Optional<Long>> CREATION_TIME = DataComponentType.<Optional<Long>>builder().codec(Codecs.optional(Codec.LONG)).packetCodec(PacketCodecs.optional(PacketCodecs.VAR_LONG)).build();
+
+    public static final Item INSTANCE = new BloodItem(20 * 30, Hematurgy.DECAYED_BLOOD, new Settings().maxCount(16).component(CREATION_TIME, null).food(new FoodComponent.Builder() //
+            .nutrition(1) //
+            .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 20 * 30, 1), 1) //
+            .alwaysEdible().build()));
 
     public final int decayTicks;
     public final Item decayed;
 
-    public DecayingItem(int decayTicks, Item decayed, Settings settings) {
+    public BloodItem(int decayTicks, Item decayed, Settings settings) {
         super(settings);
         this.decayTicks = decayTicks;
         this.decayed = decayed;
@@ -138,7 +147,19 @@ public class DecayingItem extends Item {
     }
 
     public int getDecay(ItemStack stack) {
-        return 0;
+        Optional<Long> originTime = stack.get(CREATION_TIME);
+        if (originTime == null || originTime.isEmpty()) {
+            return 0;
+        }
+        World world = Hematurgy.safelyGetClientWorld();
+        if (world == null) {
+            return 0;
+        }
+        long age = world.getTime() - originTime.orElse(null);
+        if (age >= this.decayTicks) {
+            return 13;
+        }
+        return Math.round((float) age / (float) this.decayTicks * 13);
     }
 
     @Override

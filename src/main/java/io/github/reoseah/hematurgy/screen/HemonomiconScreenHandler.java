@@ -1,6 +1,8 @@
 package io.github.reoseah.hematurgy.screen;
 
+import io.github.reoseah.hematurgy.item.BloodItem;
 import io.github.reoseah.hematurgy.item.HemonomiconItem;
+import io.github.reoseah.hematurgy.recipe.HemonomiconRecipe;
 import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
 import net.minecraft.block.LecternBlock;
 import net.minecraft.block.entity.BlockEntity;
@@ -11,14 +13,20 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class HemonomiconScreenHandler extends ScreenHandler {
     public static final ScreenHandlerType<HemonomiconScreenHandler> TYPE = new ScreenHandlerType<>(HemonomiconScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
@@ -30,6 +38,9 @@ public class HemonomiconScreenHandler extends ScreenHandler {
     public final Property currentPage;
     public final Property isUttering;
     public final Inventory inventory = new HemonomiconInventory(this);
+    private @Nullable Identifier utteranceId;
+    private long utteranceStart;
+    private @Nullable HemonomiconRecipe utteranceRecipe;
 
     public HemonomiconScreenHandler(int syncId, PlayerInventory playerInv) {
         this(syncId, playerInv, new ClientContext());
@@ -50,15 +61,103 @@ public class HemonomiconScreenHandler extends ScreenHandler {
         }
     }
 
+    public void startUtterance(Identifier id, ServerPlayerEntity player) {
+        this.isUttering.set(1);
+        this.utteranceId = id;
+        this.utteranceStart = player.getWorld().getTime();
+
+        player.getWorld().getRecipeManager() //
+                .getAllMatches(HemonomiconRecipe.TYPE, this.inventory, player.getWorld()) //
+                .stream() //
+                .map(RecipeEntry::value) //
+                .filter(recipe -> recipe.utterance.equals(id)) //
+                .findFirst() //
+                .ifPresent(recipe -> this.utteranceRecipe = recipe);
+    }
+
+    public void stopUtterance() {
+        this.isUttering.set(0);
+        this.utteranceId = null;
+        this.utteranceStart = 0;
+        this.utteranceRecipe = null;
+
+        // decay blood by a lot as it wasn't decaying during the utterance
+        // and it would allow to cheat the decay system otherwise
+        for (int i = 0; i < 16; i++) {
+            var stack = this.getSlot(i).getStack();
+            if (stack != null && stack.isOf(BloodItem.INSTANCE)) {
+                var time = stack.get(BloodItem.CREATION_TIME);
+                if (time != null && time.isPresent()) {
+                    stack.set(BloodItem.CREATION_TIME, Optional.of(time.get() - 20 * 10));
+                }
+            }
+        }
+        this.sendContentUpdates();
+    }
+
     @Override
     public ItemStack quickMove(PlayerEntity player, int slot) {
         return ItemStack.EMPTY;
     }
 
     @Override
+    public void onClosed(PlayerEntity player) {
+        super.onClosed(player);
+        this.dropInventory(player, this.inventory);
+    }
+
+    @Override
     public boolean canUse(PlayerEntity player) {
+        // this gets called every tick, so it's a tick method effectively
+
+        if (this.utteranceRecipe != null) {
+            var recipeDuration = this.utteranceRecipe.duration;
+            if (player.getWorld().getTime() - this.utteranceStart >= recipeDuration * player.getWorld().getTickManager().getTickRate()) {
+                this.utteranceRecipe.craft(this.inventory, player.getWorld(), player, this::insertResult);
+
+                this.stopUtterance();
+            }
+        }
+
         return this.context.canUse(player);
     }
+
+
+    protected void insertResult(ItemStack result, PlayerEntity player) {
+        boolean inserted = false;
+        for (int i = 0; i < 16; i++) {
+            SlotConfiguration configuration = ((ConfigurableSlot) this.slots.get(i)).getConfiguration();
+            if (configuration != null && configuration.output) {
+                ItemStack excess = insertStack(i, result);
+                if (!excess.isEmpty()) {
+                    player.dropItem(excess, false);
+                }
+                inserted = true;
+                break;
+            }
+        }
+        if (!inserted) {
+            player.dropItem(result, false);
+        }
+    }
+
+    protected ItemStack insertStack(int slot, ItemStack stack) {
+        ItemStack current = this.inventory.getStack(slot);
+        if (current.isEmpty()) {
+            this.inventory.setStack(slot, stack);
+            return ItemStack.EMPTY;
+        } else if (ItemStack.areItemsAndComponentsEqual(current, stack)) {
+            int amount = Math.min(stack.getCount(), current.getMaxCount() - current.getCount());
+            if (amount > 0) {
+                current.increment(amount);
+                this.inventory.setStack(slot, current);
+                stack.decrement(amount);
+            }
+            return stack;
+        }
+        return stack;
+    }
+
 
     @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
@@ -69,31 +168,21 @@ public class HemonomiconScreenHandler extends ScreenHandler {
                     return false;
                 }
                 this.currentPage.set(page - 2);
-//                this.dropInventory(player, this.inventory);
+                this.dropInventory(player, this.inventory);
 
-//                this.context.onHemonomiconRead(player.getWorld().getTime());
                 return true;
             }
             case NEXT_PAGE_BUTTON -> {
                 int page = this.currentPage.get();
                 this.currentPage.set(page + 2);
-//                this.dropInventory(player, this.inventory);
+                this.dropInventory(player, this.inventory);
 
-//                this.context.onHemonomiconRead(player.getWorld().getTime());
                 return true;
             }
-//            case START_UTTERANCE -> {
-//                this.isUttering.set(1);
-//                return true;
-//            }
-//            case STOP_UTTERANCE -> {
-//                context.onUnfinishedUtterance(player.getWorld().getTime());
-//                this.onStoppedUttering();
-//                return true;
-//            }
         }
         return false;
     }
+
     public void configureSlots(SlotConfiguration[] definitions) {
         for (int i = 0; i < definitions.length; i++) {
             ((ConfigurableSlot) this.slots.get(i)).setConfiguration(definitions[i]);

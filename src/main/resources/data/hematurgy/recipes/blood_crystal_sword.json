@@ -1,0 +1,13 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/blood_crystal_sword",
+  "duration": 10,
+  "ingredients": [
+    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:ritual_blood" },
+    { "item": "hematurgy:blood_salt" }
+  ],
+  "result": {
+    "id": "hematurgy:blood_crystal_sword"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/ritual_sickle",
+  "duration": 10,
+  "ingredients": [
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:netherite_scrap" }
+  ],
+  "result": {
+    "id": "hematurgy:ritual_sickle",
+    "count": 1
+  }
+}

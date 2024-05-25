@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "hematurgy:blood_salt_ingredient"
+    },
+    {
+      "item": "hematurgy:ash"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "id": "hematurgy:blood_salt_mixture"
+  }
+}

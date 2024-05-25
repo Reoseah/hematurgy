@@ -1,0 +1,12 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/hemoalchemical_poison",
+  "duration": 7,
+  "ingredients": [
+    { "tag": "hematurgy:ritual_blood" },
+    { "item": "hematurgy:ash" }
+  ],
+  "result": {
+    "id": "hematurgy:hemoalchemical_poison"
+  }
+}

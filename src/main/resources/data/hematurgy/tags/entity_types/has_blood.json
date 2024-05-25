@@ -1,0 +1,15 @@
+{
+  "values": [
+    "minecraft:villager",
+    "minecraft:wandering_trader",
+    "minecraft:witch",
+    "minecraft:vindicator",
+    "minecraft:pillager",
+    "minecraft:pillager",
+    "minecraft:evoker",
+    "minecraft:illusioner",
+    "minecraft:player",
+    { "id": "#haema:good_blood_sources", "required": false },
+    { "id": "#bewitchment:has_blood", "required": false }
+  ]
+}

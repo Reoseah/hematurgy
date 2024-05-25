@@ -1,0 +1,13 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/animated_blood",
+  "duration": 10,
+  "ingredients": [
+    { "item": "hematurgy:blood" },
+    { "item": "hematurgy:blood_salt" },
+    { "item": "minecraft:nether_wart" }
+  ],
+  "result": {
+    "id": "hematurgy:animated_blood"
+  }
+}

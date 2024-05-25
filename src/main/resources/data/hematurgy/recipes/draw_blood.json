@@ -1,0 +1,5 @@
+{
+  "type": "hematurgy:draw_blood",
+  "utterance": "hematurgy:recipe/draw_blood",
+  "duration": 5
+}

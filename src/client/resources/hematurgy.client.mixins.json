@@ -4,10 +4,10 @@
   "compatibilityLevel": "JAVA_21",
   "client": [
     "BuiltinItemModelRendererMixin",
-    "DecayingItemMixin",
     "InGameHudMixin",
     "ItemRendererMixin",
-    "LecternBlockEntityRendererMixin"
+    "LecternBlockEntityRendererMixin",
+    "HematurgyMixin"
   ],
   "injectors": {
     "defaultRequire": 1

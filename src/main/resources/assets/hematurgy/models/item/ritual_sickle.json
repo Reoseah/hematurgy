@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "hematurgy:item/ritual_sickle"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hematurgy:has_target": 1
+      },
+      "model": "hematurgy:item/ritual_sickle_with_blood"
+    }
+  ]
+}

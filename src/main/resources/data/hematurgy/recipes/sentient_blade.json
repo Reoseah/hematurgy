@@ -1,0 +1,16 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/sentient_blade",
+  "duration": 16,
+  "ingredients": [
+    { "item": "hematurgy:blood_salt" },
+    { "item": "hematurgy:broken_ancient_sword" },
+    { "item": "minecraft:diamond" },
+    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:ritual_blood" }
+  ],
+  "result": {
+    "id": "hematurgy:sentient_blade"
+  }
+}

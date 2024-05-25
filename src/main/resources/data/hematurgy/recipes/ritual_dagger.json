@@ -1,0 +1,15 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/ritual_dagger",
+  "duration": 10,
+  "ingredients": [
+    { "item": "minecraft:iron_ingot" },
+    { "tag": "hematurgy:ritual_blood" },
+    { "item": "minecraft:diamond" },
+    { "tag": "hematurgy:ritual_blood" },
+    { "item": "minecraft:netherite_scrap" }
+  ],
+  "result": {
+    "id": "hematurgy:ritual_dagger"
+  }
+}

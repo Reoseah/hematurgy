@@ -1,0 +1,13 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/extract_iron",
+  "duration": 7,
+  "ingredients": [
+    [
+      { "tag": "hematurgy:ritual_blood" }
+    ]
+  ],
+  "result": {
+    "id": "minecraft:iron_nugget"
+  }
+}

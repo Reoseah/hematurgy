@@ -125,10 +125,7 @@ public class Utterance extends BookSimpleElement {
             float ratio = (readTime / Utterance.this.duration);
 
             if (ratio > 1) {
-//                ClientPlayNetworking.send(HemonomiconPackets.UTTERANCE, Util.make(
-//                        PacketByteBufs.create(),
-//                        buf -> buf.writeIdentifier(Utterance.this.id)
-//                ));
+                // ClientPlayNetworking.send(new StopUtterancePayload());
 
                 this.mouseDown = false;
                 this.mouseDownTime = 0;

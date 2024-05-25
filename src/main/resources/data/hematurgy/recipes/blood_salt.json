@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "experience": 0.2,
+  "ingredient": {
+    "item": "hematurgy:blood_salt_mixture"
+  },
+  "result": {
+    "id": "hematurgy:blood_salt"
+  }
+}

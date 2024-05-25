@@ -1,0 +1,11 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/decayed_blood",
+  "duration": 16,
+  "ingredients": [
+    { "tag": "hematurgy:decayable_hemomancy" }
+  ],
+  "result": {
+    "id": "hematurgy:decayed_blood"
+  }
+}

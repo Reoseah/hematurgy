@@ -41,9 +41,6 @@ public record BookLayout(Int2ObjectMap<List<Drawable>> pages, Int2ObjectMap<Chap
     }
 
     public static class Builder {
-        /**
-         * The x coordinates of the left and right pages. See {@link #getCurrentX()} and {@link #getNextX()}.
-         */
         private final int leftX, rightX;
         private final int paddingTop;
         private final int pageHeight;

@@ -1,5 +1,6 @@
 package io.github.reoseah.hematurgy.screen.client;
 
+import io.github.reoseah.hematurgy.network.ClientSlotLayoutPayload;
 import io.github.reoseah.hematurgy.network.UseBookmarkPayload;
 import io.github.reoseah.hematurgy.resource.BookLayout;
 import io.github.reoseah.hematurgy.resource.BookLoader;
@@ -119,12 +120,7 @@ public class HemonomiconScreen extends HandledScreen<HemonomiconScreenHandler> {
         SlotConfiguration[] slots = this.layout.getFoldSlots(this.handler.currentPage.get());
 
         this.handler.configureSlots(slots);
-//        ClientPlayNetworking.send(HemonomiconPackets.PAGE_SLOTS, Util.make(PacketByteBufs.create(), buf -> {
-//            buf.writeVarInt(slots.length);
-//            for (SlotDefinition slot : slots) {
-//                slot.write(buf);
-//            }
-//        }));
+        ClientPlayNetworking.send(new ClientSlotLayoutPayload(slots));
     }
 
     @Override
