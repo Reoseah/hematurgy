@@ -4,9 +4,9 @@
   "duration": 10,
   "ingredients": [
     { "item": "minecraft:iron_ingot" },
-    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:blood" },
     { "item": "minecraft:diamond" },
-    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:blood" },
     { "item": "minecraft:netherite_scrap" }
   ],
   "result": {

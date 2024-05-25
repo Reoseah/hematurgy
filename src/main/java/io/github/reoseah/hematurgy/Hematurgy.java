@@ -2,9 +2,7 @@ package io.github.reoseah.hematurgy;
 
 import io.github.reoseah.hematurgy.item.*;
 import io.github.reoseah.hematurgy.network.HemonomiconNetworking;
-import io.github.reoseah.hematurgy.recipe.DrawBloodRecipe;
-import io.github.reoseah.hematurgy.recipe.HemonomiconCraftingRecipe;
-import io.github.reoseah.hematurgy.recipe.HemonomiconRecipe;
+import io.github.reoseah.hematurgy.recipe.*;
 import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -128,6 +126,8 @@ public class Hematurgy implements ModInitializer {
 
         Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:draw_blood", DrawBloodRecipe.SERIALIZER);
         Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:hemonomicon_crafting", HemonomiconCraftingRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:hemonomicon_repair", HemonomiconRepairRecipe.Serializer.INSTANCE);
+        Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:sentient_blade_absorption", SentientBladeAbsorptionRecipe.SERIALIZER);
 
         LootTableEvents.MODIFY.register(Hematurgy::modifyLootTable);
         UseBlockCallback.EVENT.register(Hematurgy::interact);

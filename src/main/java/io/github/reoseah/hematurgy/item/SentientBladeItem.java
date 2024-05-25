@@ -49,7 +49,7 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
         super.appendTooltip(stack, context, tooltip, type);
         EchobladeCapableItem.insertTooltip(stack, tooltip);
         if (this.hasRitualHarvest(stack)) {
-            tooltip.add(Text.translatable("hematurgy.life_harvest").formatted(Formatting.GRAY));
+            tooltip.add(Text.translatable("hematurgy.ritual_harvest.tooltip").formatted(Formatting.GRAY));
             RitualHarvestCapableItem.addTooltip(stack, tooltip);
         }
     }

@@ -10,8 +10,8 @@ public class SlotConfiguration {
     public final int x;
     public final int y;
     public final boolean output;
-    protected final Ingredient ingredient;
-    protected final Identifier background;
+    public final Ingredient ingredient;
+    public final Identifier background;
 
     public SlotConfiguration(int x, int y, boolean output, Ingredient ingredient) {
         this(x, y, output, ingredient, null);

@@ -4,7 +4,7 @@
   "duration": 7,
   "ingredients": [
     [
-      { "tag": "hematurgy:ritual_blood" }
+      { "tag": "hematurgy:blood" }
     ]
   ],
   "result": {

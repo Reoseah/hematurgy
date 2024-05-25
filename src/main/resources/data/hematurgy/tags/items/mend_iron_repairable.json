@@ -1,0 +1,17 @@
+{
+  "values": [
+    "hematurgy:ritual_sickle",
+    "hematurgy:ritual_dagger",
+    "hematurgy:sentient_blade",
+    "minecraft:iron_sword",
+    "minecraft:iron_pickaxe",
+    "minecraft:iron_axe",
+    "minecraft:iron_shovel",
+    "minecraft:iron_hoe",
+    "minecraft:shears",
+    "minecraft:iron_helmet",
+    "minecraft:iron_chestplate",
+    "minecraft:iron_leggings",
+    "minecraft:iron_boots"
+  ]
+}

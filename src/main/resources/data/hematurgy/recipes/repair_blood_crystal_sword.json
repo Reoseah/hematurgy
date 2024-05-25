@@ -1,0 +1,12 @@
+{
+  "type": "hematurgy:hemonomicon_repair",
+  "utterance": "hematurgy:recipe/repair_blood_crystal_sword",
+  "duration": 6,
+  "item": {
+    "item": "hematurgy:blood_crystal_sword"
+  },
+  "material": {
+    "tag": "hematurgy:blood"
+  },
+  "repair_amount": 100
+}

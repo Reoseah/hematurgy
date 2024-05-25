@@ -122,6 +122,230 @@
         },
         { "type": "utterance", "translation_key": "hematurgy.hemoalchemical_poison.utterance", "id": "hematurgy:recipe/hemoalchemical_poison", "duration": 7 }
       ]
+    },
+
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.blood_crystal_sword" },
+        { "type": "paragraph", "translation_key": "hematurgy.blood_crystal_sword.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.blood_crystal_sword.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.blood_crystal_sword.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.blood_crystal_sword" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 27, "y": 0, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 27, "y": 18, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 27, "y": 36, "ingredient": { "item": "hematurgy:blood_salt" }, "background": "hematurgy:item/placeholder/dust" },
+            { "x": 70, "y": 18, "output": true, "background": "hematurgy:item/placeholder/blood_crystal_sword" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 20, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.blood_crystal_sword.utterance", "id": "hematurgy:recipe/blood_crystal_sword", "duration": 10 }
+      ]
+    },
+
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.repair_blood_crystal_sword" },
+        { "type": "paragraph", "translation_key": "hematurgy.repair_blood_crystal_sword.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.repair_blood_crystal_sword.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.repair_blood_crystal_sword.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "hematurgy.repair_blood_crystal_sword.utterance_page_title" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 9, "y": 4, "ingredient": { "item": "hematurgy:blood_crystal_sword" }, "background": "hematurgy:item/placeholder/blood_crystal_sword" },
+            { "x": 27, "y": 4, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 70, "y": 4, "output": true, "background": "hematurgy:item/placeholder/blood_crystal_sword" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 6, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.repair_blood_crystal_sword.utterance", "id": "hematurgy:recipe/repair_blood_crystal_sword", "duration": 6 }
+      ]
+    },
+
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.animated_blood" },
+        { "type": "paragraph", "translation_key": "hematurgy.animated_blood.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.animated_blood.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.animated_blood.text0" },
+        { "type": "paragraph", "translation_key": "hematurgy.animated_blood.text1" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.animated_blood" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 9, "y": 0, "ingredient": { "item": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 27, "y": 0, "ingredient": { "item": "hematurgy:blood_salt" }, "background": "hematurgy:item/placeholder/dust" },
+            { "x": 18, "y": 18, "ingredient": { "item": "minecraft:nether_wart" }, "background": "hematurgy:item/placeholder/nether_wart" },
+            { "x": 70, "y": 7, "output": true, "background": "hematurgy:item/placeholder/animated_blood" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 9, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.animated_blood.utterance", "id": "hematurgy:recipe/animated_blood", "duration": 10 }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.decay_hemomancy" },
+        { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "hematurgy.decay_hemomancy.utterance_page_title" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 18, "y": 4, "ingredient": [ { "tag": "hematurgy:hemomancy_item" } ], "background": "hematurgy:item/placeholder/question_mark" },
+            { "x": 61, "y": 4, "output": true, "background": "hematurgy:item/placeholder/decayed_blood" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 41, "y": 6, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.decay_hemomancy.utterance", "id": "hematurgy:recipe/decayed_blood", "duration": 16 }
+      ]
+    },
+
+    { "type": "chapter", "translation_key": "hematurgy.artifice.unformatted" },
+    { "type": "heading", "translation_key": "hematurgy.artifice" },
+    { "type": "paragraph", "translation_key": "hematurgy.artifice.0" },
+    { "type": "page_break" },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.extract_iron" },
+        { "type": "paragraph", "translation_key": "hematurgy.extract_iron.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.extract_iron.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.extract_iron.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.minecraft.iron_nugget" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 18, "y": 4, "ingredient": [ { "tag": "hematurgy:blood" }, { "tag": "hematurgy:hemomancy_item" } ], "background": "hematurgy:item/placeholder/blood" },
+            { "x": 61, "y": 4, "output": true, "background": "hematurgy:item/placeholder/iron_nugget" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 41, "y": 6, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.extract_iron.utterance", "id": "hematurgy:recipe/extract_iron", "duration": 7 }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.mend_iron" },
+        { "type": "paragraph", "translation_key": "hematurgy.mend_iron.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.mend_iron.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.mend_iron.text0" },
+        { "type": "paragraph", "translation_key": "hematurgy.mend_iron.text1" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "hematurgy.mend_iron.utterance_page_title" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 9, "y": 4, "ingredient": { "tag": "hematurgy:repairable_through_hematurgy" }, "background": "hematurgy:item/placeholder/question_mark" },
+            { "x": 27, "y": 4, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 70, "y": 4, "output": true, "background": "hematurgy:item/placeholder/question_mark" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 6, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.mend_iron.utterance", "id": "hematurgy:recipe/mend_iron", "duration": 10 }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.ritual_dagger" },
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_dagger.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_dagger.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.ritual_dagger.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.ritual_dagger" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 4, "y": 0, "ingredient": { "item": "minecraft:iron_ingot" }, "background": "hematurgy:item/placeholder/ingot" },
+            { "x": 26, "y": 9, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 4, "y": 18, "ingredient": { "item": "minecraft:diamond" }, "background": "hematurgy:item/placeholder/diamond" },
+            { "x": 26, "y": 27, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 4, "y": 36, "ingredient": { "item": "minecraft:netherite_scrap" }, "background": "hematurgy:item/placeholder/netherite_scrap" },
+            { "x": 70, "y": 18, "output": true, "background": "hematurgy:item/placeholder/ritual_dagger" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 20, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.ritual_dagger.utterance", "id": "hematurgy:recipe/ritual_dagger", "duration": 10 }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.sentient_blade" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade.text0" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.sentient_blade" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 4, "y": 0, "ingredient": { "item": "hematurgy:blood_salt" }, "background": "hematurgy:item/placeholder/dust" },
+            { "x": 4, "y": 18, "ingredient": { "item": "hematurgy:broken_ancient_sword" }, "background": "hematurgy:item/placeholder/broken_ancient_sword" },
+            { "x": 4, "y": 36, "ingredient": { "item": "minecraft:diamond" }, "background": "hematurgy:item/placeholder/diamond" },
+            { "x": 26, "y": 0, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 26, "y": 18, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 26, "y": 36, "ingredient": { "tag": "minecraft:blood" }, "background": "hematurgy:item/placeholder/blood" },
+            { "x": 70, "y": 18, "output": true, "background": "hematurgy:item/placeholder/sentient_blade" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 20, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.sentient_blade.utterance", "id": "hematurgy:recipe/sentient_blade", "duration": 16 }
+      ]
+    },
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.sentient_blade_absorption" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade_absorption.precarity" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade_absorption.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade_absorption.text0" },
+        { "type": "paragraph", "translation_key": "hematurgy.sentient_blade_absorption.text1" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "hematurgy.sentient_blade_absorption.utterance_page_title" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 18, "y": 0, "ingredient": { "item": "hematurgy:sentient_blade" }, "background": "hematurgy:item/placeholder/sentient_blade" },
+            {
+              "x": 18, "y": 22,
+              "ingredient": [
+                { "item": "hematurgy:ritual_sickle" },
+                { "item": "hematurgy:ritual_dagger" },
+                { "tag": "minecraft:swords" }
+              ],
+              "background": "hematurgy:item/placeholder/question_mark"
+            },
+            { "x": 61, "y": 12, "output": true, "background": "hematurgy:item/placeholder/sentient_blade" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 41, "y": 14, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.sentient_blade_absorption.utterance", "id": "hematurgy:recipe/sentient_blade_absorption", "duration": 6 }
+      ]
     }
   ]
 }

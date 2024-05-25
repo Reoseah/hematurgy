@@ -1,0 +1,12 @@
+{
+  "type": "hematurgy:hemonomicon_repair",
+  "utterance": "hematurgy:recipe/mend_iron",
+  "duration": 10,
+  "item": {
+    "tag": "hematurgy:mend_iron_repairable"
+  },
+  "material": {
+    "tag": "hematurgy:blood"
+  },
+  "repair_amount": 100
+}

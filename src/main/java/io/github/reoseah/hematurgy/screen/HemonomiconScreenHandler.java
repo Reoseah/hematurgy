@@ -4,6 +4,7 @@ import io.github.reoseah.hematurgy.item.BloodItem;
 import io.github.reoseah.hematurgy.item.HemonomiconItem;
 import io.github.reoseah.hematurgy.recipe.HemonomiconRecipe;
 import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
+import it.unimi.dsi.fastutil.ints.IntArraySet;
 import net.minecraft.block.LecternBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LecternBlockEntity;
@@ -96,8 +97,67 @@ public class HemonomiconScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
-        return ItemStack.EMPTY;
+    public ItemStack quickMove(PlayerEntity player, int index) {
+        Slot slot = this.slots.get(index);
+        ItemStack stack = slot.getStack();
+        if (stack.isEmpty()) {
+            return ItemStack.EMPTY;
+        }
+        ItemStack previous = stack.copy();
+        if (index < 16) {
+            // TODO: merge ritual blood stacks like the way they merge manually
+            if (!this.insertItem(stack, 16, 16 + 9, true)) {
+                return ItemStack.EMPTY;
+            }
+            slot.onQuickTransfer(stack, previous);
+        } else {
+            IntArraySet slotsToSpreadStackTo = new IntArraySet();
+            int total = 0;
+            for (int i = 0; i < 16; i++) {
+                SlotConfiguration definition = ((ConfigurableSlot) this.getSlot(i)).config;
+                if (definition != null && !definition.output && definition.ingredient != null && definition.ingredient.test(stack)) {
+                    ItemStack slotStack = this.getSlot(i).getStack();
+                    if (slotStack.isEmpty() || ItemStack.areItemsAndComponentsEqual(slotStack, stack)) {
+                        slotsToSpreadStackTo.add(i);
+                        total += slotStack.getCount();
+                    }
+                }
+            }
+
+            if (!slotsToSpreadStackTo.isEmpty()) {
+                int targetCount = (total + stack.getCount()) / slotsToSpreadStackTo.size();
+                for (int idx : slotsToSpreadStackTo) {
+                    ItemStack slotStack = this.getSlot(idx).getStack();
+                    int slotCount = slotStack.getCount();
+                    int toAdd = Math.min(targetCount - slotCount, this.getSlot(idx).getMaxItemCount(stack) - slotCount);
+                    if (toAdd > 0) {
+                        stack = this.getSlot(idx).insertStack(stack, toAdd);
+                    }
+                }
+                for (int idx : slotsToSpreadStackTo) {
+                    if (stack.isEmpty()) {
+                        break;
+                    }
+                    stack = this.getSlot(idx).insertStack(stack);
+                }
+            }
+//            else if (!this.insertItem(stack, 16, 16 + 9, false)) {
+//                return ItemStack.EMPTY;
+//            }
+        }
+
+        if (stack.isEmpty()) {
+            slot.setStack(ItemStack.EMPTY);
+        } else {
+            slot.markDirty();
+        }
+
+        if (stack.getCount() == previous.getCount()) {
+            return ItemStack.EMPTY;
+        }
+
+        slot.onTakeItem(player, stack);
+        return previous;
     }
 
     @Override

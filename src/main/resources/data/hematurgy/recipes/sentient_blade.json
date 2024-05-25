@@ -6,9 +6,9 @@
     { "item": "hematurgy:blood_salt" },
     { "item": "hematurgy:broken_ancient_sword" },
     { "item": "minecraft:diamond" },
-    { "tag": "hematurgy:ritual_blood" },
-    { "tag": "hematurgy:ritual_blood" },
-    { "tag": "hematurgy:ritual_blood" }
+    { "tag": "hematurgy:blood" },
+    { "tag": "hematurgy:blood" },
+    { "tag": "hematurgy:blood" }
   ],
   "result": {
     "id": "hematurgy:sentient_blade"

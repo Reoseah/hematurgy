@@ -3,8 +3,8 @@
   "utterance": "hematurgy:recipe/blood_crystal_sword",
   "duration": 10,
   "ingredients": [
-    { "tag": "hematurgy:ritual_blood" },
-    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:blood" },
+    { "tag": "hematurgy:blood" },
     { "item": "hematurgy:blood_salt" }
   ],
   "result": {

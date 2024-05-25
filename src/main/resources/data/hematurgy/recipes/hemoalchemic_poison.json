@@ -3,7 +3,7 @@
   "utterance": "hematurgy:recipe/hemoalchemical_poison",
   "duration": 7,
   "ingredients": [
-    { "tag": "hematurgy:ritual_blood" },
+    { "tag": "hematurgy:blood" },
     { "item": "hematurgy:ash" }
   ],
   "result": {
