@@ -9,8 +9,8 @@ import net.minecraft.registry.tag.TagKey;
 
 public enum HematurgyMaterials implements ToolMaterial {
     RITUAL_SICKLE(BlockTags.INCORRECT_FOR_IRON_TOOL, 65, 8F, 4F, 20, Ingredient.ofItems(Items.IRON_INGOT)),
-    HEMOMANTICAL_SWORD(BlockTags.INCORRECT_FOR_STONE_TOOL,79, 8F, 8F,16, Ingredient.empty()),
-    RITUAL_DAGGER(BlockTags.INCORRECT_FOR_IRON_TOOL,129, 8F, 4F,20, Ingredient.empty()),
+    HEMOMANTICAL_SWORD(BlockTags.INCORRECT_FOR_STONE_TOOL, 79, 8F, 8F, 16, Ingredient.empty()),
+    RITUAL_DAGGER(BlockTags.INCORRECT_FOR_IRON_TOOL, 129, 8F, 4F, 20, Ingredient.empty()),
     SENTIENT_BLADE(BlockTags.INCORRECT_FOR_IRON_TOOL, 1561, 8F, 3F, 0, Ingredient.empty()),
     ;
     final TagKey<Block> inverseTag;

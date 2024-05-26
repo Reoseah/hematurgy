@@ -83,8 +83,8 @@
   "hematurgy.lifeblood": "ʟɪꜰᴇʙʟꙩꙩᴅ",
   "hematurgy.lifeblood.0": "Lifeblood, lifeforce, the essence of life, is the main concept in hematurgy. It is the power that flows through all living beings and the first source of magic.",
   "hematurgy.lifeblood.1": "It's this energy that enables miracles of hematurgy, and not the blood as a physical substance, though it's usually impractical or impossible to separate the two.",
-  "hematurgy.lifeblood.2": "Lifeblood quickly dissipates after leaving the body. Special techniques can delay this, allowing the hematurge to manipulate it and are key to the success of rituals.",
-  "hematurgy.lifeblood.3": "Even then, it's only a matter of time before the lifeblood loses its potency and only decayed mundane blood is left.",
+  "hematurgy.lifeblood.2": "Lifeblood quickly dissipates after leaving the body. Special techniques can delay this, allowing the hematurge to manipulate it and are the key to the success of rituals.",
+  "hematurgy.lifeblood.3": "Even then, it's only a matter of time before the lifeblood loses its potency and only a puddle of decayed mundane blood is left.",
   "hematurgy.lifeblood.4": "All incantations bind energy and prevent it from escaping, so you don't have to worry about it during the ritual.",
   "hematurgy.branches": "ʙʀᴀɴᴄʜᴇs ᴏꜰ ʜᴇᴍᴀᴛᴜʀɢʏ",
   "hematurgy.branches.0": "Hematurgy is traditionally divided into several branches by a particular aspect.",
@@ -145,7 +145,7 @@
   "hematurgy.decay_hemomancy.utterance": "Aᴋʜʀᴜ ʙᴇʟᴜᴍ ᴜᴋᴋɪɴᴜ\n\nNɪɴɴɪʙʀᴜ sʜᴀ ᴘᴜǫǫᴜ ᴀʟᴇ\n\nLᴜɢᴀʟ ᴅɪᴍ'ᴍᴇ, ʟɪʟɪᴛᴜ ᴍᴀᴅᴅᴜ\n\nUsʜᴜᴍᴜ ᴀʙɴᴜ ᴀʟᴜ, ᴜsʜᴜᴍᴜ ʟᴇɴᴜᴛᴜ!",
   "hematurgy.artifice": "\n§lII§r\n\nʜᴇᴍᴀᴛᴜʀɢɪᴄᴀʟ ᴀʀᴛɪꜰɪᴄᴇ",
   "hematurgy.artifice.unformatted": "Hematurgical Artifice",
-  "hematurgy.artifice.0": "Create magical items and imbue them with life force.",
+  "hematurgy.artifice.0": "Bind life energy into physical objects to create artifacts of unmatched power.",
   "hematurgy.extract_iron": "ᴇxᴛʀᴀᴄᴛ ɪʀꙩɴ",
   "hematurgy.extract_iron.precarity": "Pʀᴇᴄᴀʀɪᴛʏ: low",
   "hematurgy.extract_iron.components": "Cᴏᴍᴘᴏɴᴇɴᴛs: lifeblood",
@@ -174,5 +174,12 @@
   "hematurgy.sentient_blade_absorption.text0": "Absorb all powers from the pierced item, destroying it in process.",
   "hematurgy.sentient_blade_absorption.text1": "Previous effects will be lost if incompatible.",
   "hematurgy.sentient_blade_absorption.utterance_page_title": "Absorb Powers",
-  "hematurgy.sentient_blade_absorption.utterance": "Eᴍᴜ ᴋᴀᴋᴋᴀʙᴜ sᴀ ʙᴇʟɪ\n\nUsᴜᴍɢᴀʟ ᴜsʜʙɪʟᴜ ɴᴀᴘᴀʟᴛᴜ"
+  "hematurgy.sentient_blade_absorption.utterance": "Eᴍᴜ ᴋᴀᴋᴋᴀʙᴜ sᴀ ʙᴇʟɪ\n\nUsᴜᴍɢᴀʟ ᴜsʜʙɪʟᴜ ɴᴀᴘᴀʟᴛᴜ",
+  "hematurgy.hemomorphosis": "\n§lIII§r\n\nʜᴇᴍꙩᴍᴏʀᴘʜᴏsɪs",
+  "hematurgy.hemomorphosis.unformatted": "Hemomorphosis",
+  "hematurgy.hemomorphosis.0": "Enhance the body with the power of hematurgy.",
+  "hematurgy.astral_hematurgy": "\n§lIV§r\n\nᴀsᴛʀᴀʟ ʜᴇᴍᴀᴛᴜʀɢʏ",
+  "hematurgy.astral_hematurgy.unformatted": "Astral Hematurgy",
+  "hematurgy.astral_hematurgy.0": "Also known as Forbidden, The Astral Hematurgy manipulates the flow of life force in the cosmos and realms beyond.",
+  "hematurgy.upcoming_content": "§4Upcoming content. Stay tuned!§r"
 }

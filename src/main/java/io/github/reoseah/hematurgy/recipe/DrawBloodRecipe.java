@@ -3,7 +3,6 @@ package io.github.reoseah.hematurgy.recipe;
 
 import io.github.reoseah.hematurgy.Hematurgy;
 import io.github.reoseah.hematurgy.item.BloodItem;
-import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;

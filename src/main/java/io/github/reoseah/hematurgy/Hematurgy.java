@@ -71,6 +71,10 @@ public class Hematurgy implements ModInitializer {
             .entries((context, entries) -> {
                 entries.add(HemonomiconItem.INSTANCE);
                 entries.add(RitualSickleItem.INSTANCE);
+                entries.add(BloodCrystalSwordItem.INSTANCE);
+                entries.add(RitualDaggerItem.INSTANCE);
+                entries.add(EchobladeCapableItem.setEchobladeLevel(new ItemStack(RitualDaggerItem.INSTANCE), EchobladeCapableItem.MAX_LEVEL), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+                entries.add(SentientBladeItem.INSTANCE);
                 entries.add(BloodItem.INSTANCE);
                 entries.add(ASH);
                 entries.add(BLOOD_SALT_MIXTURE);
@@ -78,11 +82,7 @@ public class Hematurgy implements ModInitializer {
                 entries.add(DECAYED_BLOOD);
                 entries.add(ANIMATED_BLOOD);
                 entries.add(HEMOALCHEMICAL_POISON);
-                entries.add(BloodCrystalSwordItem.INSTANCE);
                 entries.add(BROKEN_ANCIENT_SWORD);
-                entries.add(RitualDaggerItem.INSTANCE);
-                entries.add(EchobladeCapableItem.setEchobladeLevel(new ItemStack(RitualDaggerItem.INSTANCE), EchobladeCapableItem.MAX_LEVEL), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
-                entries.add(SentientBladeItem.INSTANCE);
             }) //
             .build();
 
@@ -98,6 +98,9 @@ public class Hematurgy implements ModInitializer {
 
         Registry.register(Registries.ITEM, "hematurgy:hemonomicon", HemonomiconItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ritual_sickle", RitualSickleItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:blood_crystal_sword", BloodCrystalSwordItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:ritual_dagger", RitualDaggerItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:sentient_blade", SentientBladeItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:blood", BloodItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ash", ASH);
         Registry.register(Registries.ITEM, "hematurgy:blood_salt_mixture", BLOOD_SALT_MIXTURE);
@@ -105,10 +108,7 @@ public class Hematurgy implements ModInitializer {
         Registry.register(Registries.ITEM, "hematurgy:decayed_blood", DECAYED_BLOOD);
         Registry.register(Registries.ITEM, "hematurgy:animated_blood", ANIMATED_BLOOD);
         Registry.register(Registries.ITEM, "hematurgy:hemoalchemical_poison", HEMOALCHEMICAL_POISON);
-        Registry.register(Registries.ITEM, "hematurgy:blood_crystal_sword", BloodCrystalSwordItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:broken_ancient_sword", BROKEN_ANCIENT_SWORD);
-        Registry.register(Registries.ITEM, "hematurgy:ritual_dagger", RitualDaggerItem.INSTANCE);
-        Registry.register(Registries.ITEM, "hematurgy:sentient_blade", SentientBladeItem.INSTANCE);
 
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:current_page", HemonomiconItem.CURRENT_PAGE);
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:creation_time", BloodItem.CREATION_TIME);
@@ -155,8 +155,7 @@ public class Hematurgy implements ModInitializer {
                 }
                 case "chests/nether_bridge" -> {
                     LootPool.Builder pool = new LootPool.Builder()
-//                            .with(ItemEntry.builder(BROKEN_ANCIENT_SWORD).weight(9))
-                            .with(ItemEntry.builder(HemonomiconItem.INSTANCE).weight(1))
+                            .with(ItemEntry.builder(BROKEN_ANCIENT_SWORD))
                             .conditionally(RandomChanceLootCondition.builder(0.1F));
                     tableBuilder.pool(pool);
                 }

@@ -1,8 +1,8 @@
 package io.github.reoseah.hematurgy.resource;
 
+import io.github.reoseah.hematurgy.resource.book_element.Chapter;
 import io.github.reoseah.hematurgy.resource.book_element.SlotConfiguration;
 import io.github.reoseah.hematurgy.resource.book_element.SlotConfigurationProvider;
-import io.github.reoseah.hematurgy.resource.book_element.Chapter;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMaps;

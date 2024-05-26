@@ -346,6 +346,15 @@
         },
         { "type": "utterance", "translation_key": "hematurgy.sentient_blade_absorption.utterance", "id": "hematurgy:recipe/sentient_blade_absorption", "duration": 6 }
       ]
-    }
+    },
+    { "type": "chapter", "translation_key": "hematurgy.hemomorphosis.unformatted" },
+    { "type": "heading", "translation_key": "hematurgy.hemomorphosis" },
+    { "type": "paragraph", "translation_key": "hematurgy.hemomorphosis.0" },
+
+    { "type": "chapter", "translation_key": "hematurgy.astral_hematurgy.unformatted" },
+    { "type": "heading", "translation_key": "hematurgy.astral_hematurgy" },
+    { "type": "paragraph", "translation_key": "hematurgy.astral_hematurgy.0" },
+
+    { "type": "paragraph", "translation_key": "hematurgy.upcoming_content" }
   ]
 }
