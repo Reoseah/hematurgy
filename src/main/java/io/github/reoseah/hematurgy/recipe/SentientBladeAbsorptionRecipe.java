@@ -1,7 +1,6 @@
 package io.github.reoseah.hematurgy.recipe;
 
 
-import com.mojang.datafixers.util.Unit;
 import io.github.reoseah.hematurgy.item.*;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.ItemEnchantmentsComponent;
@@ -11,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeSerializer;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
@@ -19,7 +17,6 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
@@ -41,7 +38,7 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
             return false;
         }
 
-        List<AbsorbableAbility> toAbsorb = AbsorbableAbility.getAbsorbableAbilities(target, material, world.getRegistryManager());
+        List<Ability> toAbsorb = Ability.getAbsorbableAbilities(target, material);
         return !toAbsorb.isEmpty();
     }
 
@@ -56,12 +53,12 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
         if (material.isOf(SentientBladeItem.INSTANCE)) {
             return;
         }
-        List<AbsorbableAbility> toAbsorb = AbsorbableAbility.getAbsorbableAbilities(target, material, world.getRegistryManager());
+        List<Ability> abilities = Ability.getAbsorbableAbilities(target, material);
 
-        if (!toAbsorb.isEmpty()) {
+        if (!abilities.isEmpty()) {
             ItemStack result = target.copy();
 
-            toAbsorb.forEach(ability -> ability.apply(result));
+            abilities.forEach(ability -> ability.apply(result));
 
             inventory.removeStack(0, 1);
             inventory.removeStack(1, 1);
@@ -80,19 +77,15 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
         return SERIALIZER;
     }
 
-    /**
-     * Enchantment that can be absorbed by Sentient Blade,
-     * or an ability of another weapon that can be absorbed.
-     */
-    public interface AbsorbableAbility {
-        boolean canCombine(AbsorbableAbility other);
+    public interface Ability {
+        boolean canCombine(Ability other);
 
         boolean canApply(ItemStack stack);
 
         void apply(ItemStack stack);
 
-        static List<AbsorbableAbility> getAbsorbableAbilities(ItemStack target, ItemStack material, DynamicRegistryManager registryManager) {
-            List<AbsorbableAbility> abilities = new ArrayList<>();
+        static List<Ability> getAbsorbableAbilities(ItemStack target, ItemStack material) {
+            List<Ability> abilities = new ArrayList<>();
 
             EnchantmentHelper.getEnchantments(material).getEnchantmentsMap().forEach(entry -> {
                 RegistryEntry<Enchantment> enchantment = entry.getKey();
@@ -106,17 +99,17 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
                 abilities.add(LifeHarvest.INSTANCE);
             }
 
-            List<AbsorbableAbility> applicable = new ArrayList<>();
-            for (AbsorbableAbility ability : abilities) {
+            List<Ability> applicable = new ArrayList<>();
+            for (Ability ability : abilities) {
                 if (ability.canApply(target)) {
                     applicable.add(ability);
                 }
             }
 
-            List<AbsorbableAbility> compatible = new ArrayList<>();
-            for (AbsorbableAbility ability : applicable) {
+            List<Ability> compatible = new ArrayList<>();
+            for (Ability ability : applicable) {
                 boolean isCompatible = true;
-                for (AbsorbableAbility other : compatible) {
+                for (Ability other : compatible) {
                     if (ability != other && !ability.canCombine(other)) {
                         isCompatible = false;
                         break;
@@ -131,9 +124,9 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
         }
     }
 
-    public record EnchantmentAbility(RegistryEntry<Enchantment> enchantment, int level) implements AbsorbableAbility {
+    public record EnchantmentAbility(RegistryEntry<Enchantment> enchantment, int level) implements Ability {
         @Override
-        public boolean canCombine(AbsorbableAbility other) {
+        public boolean canCombine(Ability other) {
             return !(other instanceof EnchantmentAbility ability) || this.enchantment.value().canCombine(ability.enchantment.value());
         }
 
@@ -161,47 +154,46 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
         stack.set(DataComponentTypes.ENCHANTMENTS, newEnchantments.build());
     }
 
-    public record Echoblade(int level) implements AbsorbableAbility {
+    public record Echoblade(int level) implements Ability {
         @Override
-        public boolean canCombine(AbsorbableAbility other) {
+        public boolean canCombine(Ability other) {
             return other != LifeHarvest.INSTANCE;
         }
 
         @Override
         public boolean canApply(ItemStack stack) {
-            return !stack.contains(SentientBladeItem.HAS_ECHOBLADE);
+            var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
+            return ability != RitualWeaponAbilityComponent.ECHOBLADE;
         }
 
         @Override
         public void apply(ItemStack stack) {
-            stack.set(SentientBladeItem.HAS_ECHOBLADE, Unit.INSTANCE);
+            stack.set(RitualWeaponAbilityComponent.TYPE, RitualWeaponAbilityComponent.ECHOBLADE);
             stack.set(EchobladeCapableItem.LEVEL, this.level);
-            if (stack.contains(SentientBladeItem.HAS_RITUAL_HARVEST)) {
-                stack.remove(SentientBladeItem.HAS_RITUAL_HARVEST);
-                stack.remove(RitualHarvestCapableItem.TARGET);
+            if (stack.contains(BloodSourceComponent.TYPE)) {
+                stack.remove(BloodSourceComponent.TYPE);
             }
         }
     }
 
-    public enum LifeHarvest implements AbsorbableAbility {
+    public enum LifeHarvest implements Ability {
         INSTANCE;
 
         @Override
-        public boolean canCombine(AbsorbableAbility other) {
+        public boolean canCombine(Ability other) {
             return !(other instanceof Echoblade);
         }
 
         @Override
         public boolean canApply(ItemStack stack) {
-            return !stack.contains(SentientBladeItem.HAS_RITUAL_HARVEST);
+            var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
+            return ability != RitualWeaponAbilityComponent.HARVEST;
         }
 
         @Override
         public void apply(ItemStack stack) {
-            stack.set(SentientBladeItem.HAS_RITUAL_HARVEST, Unit.INSTANCE);
-            stack.set(RitualHarvestCapableItem.TARGET, Optional.empty());
-            if (stack.contains(SentientBladeItem.HAS_ECHOBLADE)) {
-                stack.remove(SentientBladeItem.HAS_ECHOBLADE);
+            stack.set(RitualWeaponAbilityComponent.TYPE, RitualWeaponAbilityComponent.HARVEST);
+            if (stack.contains(EchobladeCapableItem.LEVEL)) {
                 stack.remove(EchobladeCapableItem.LEVEL);
             }
         }

@@ -40,7 +40,7 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        RitualHarvestCapableItem.addTooltip(stack, tooltip);
+        RitualHarvestCapableItem.addTooltip(stack, tooltip, context, type);
     }
 
     @Override

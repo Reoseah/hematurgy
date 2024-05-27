@@ -111,12 +111,11 @@ public class Hematurgy implements ModInitializer {
         Registry.register(Registries.ITEM, "hematurgy:broken_ancient_sword", BROKEN_ANCIENT_SWORD);
 
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:current_page", HemonomiconItem.CURRENT_PAGE);
-        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:creation_time", BloodItem.CREATION_TIME);
-        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:target", RitualHarvestCapableItem.TARGET);
+        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:timestamp", BloodItem.TIMESTAMP);
+        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:target", BloodSourceComponent.TYPE);
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:echoblade_level", EchobladeCapableItem.LEVEL);
-        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:has_ritual_harvest", SentientBladeItem.HAS_RITUAL_HARVEST);
+        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:ritual_weapon_ability", RitualWeaponAbilityComponent.TYPE);
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:last_update", BloodCrystalSwordItem.LAST_TICK);
-        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:has_echoblade", SentientBladeItem.HAS_ECHOBLADE);
 
         Registry.register(Registries.ITEM_GROUP, "hematurgy:main", ITEM_GROUP);
 

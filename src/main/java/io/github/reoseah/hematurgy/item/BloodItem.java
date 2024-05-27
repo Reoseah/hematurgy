@@ -14,16 +14,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.ClickType;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.Optional;
-
 public class BloodItem extends Item {
-    public static final DataComponentType<Optional<Long>> CREATION_TIME = DataComponentType.<Optional<Long>>builder().codec(Codecs.optional(Codec.LONG)).packetCodec(PacketCodecs.optional(PacketCodecs.VAR_LONG)).build();
+    public static final DataComponentType<Long> TIMESTAMP = DataComponentType.<Long>builder().codec(Codec.LONG).packetCodec(PacketCodecs.VAR_LONG).build();
 
-    public static final Item INSTANCE = new BloodItem(20 * 30, Hematurgy.DECAYED_BLOOD, new Settings().maxCount(16).component(CREATION_TIME, null).food(new FoodComponent.Builder() //
+    public static final Item INSTANCE = new BloodItem(20 * 30, Hematurgy.DECAYED_BLOOD, new Settings().maxCount(16).component(TIMESTAMP, null).food(new FoodComponent.Builder() //
             .nutrition(1) //
             .statusEffect(new StatusEffectInstance(StatusEffects.HUNGER, 20 * 30, 1), 1) //
             .alwaysEdible().build()));
@@ -134,28 +131,28 @@ public class BloodItem extends Item {
 
         otherStack.decrement(change);
         stack.setCount(newCount);
-        stack.set(CREATION_TIME, Optional.of(newTime));
+        stack.set(TIMESTAMP, newTime);
     }
 
     private long getOrSetCreationTime(ItemStack stack, long worldTime) {
-        Optional<Long> time = stack.get(CREATION_TIME);
-        if (time == null || time.isEmpty()) {
-            stack.set(CREATION_TIME, Optional.of(worldTime));
+        Long time = stack.get(TIMESTAMP);
+        if (time == null) {
+            stack.set(TIMESTAMP, worldTime);
             return worldTime;
         }
-        return time.get();
+        return time;
     }
 
     public int getDecay(ItemStack stack) {
-        Optional<Long> originTime = stack.get(CREATION_TIME);
-        if (originTime == null || originTime.isEmpty()) {
+        Long timestamp = stack.get(TIMESTAMP);
+        if (timestamp == null) {
             return 0;
         }
         World world = Hematurgy.safelyGetClientWorld();
         if (world == null) {
             return 0;
         }
-        long age = world.getTime() - originTime.orElse(null);
+        long age = world.getTime() - timestamp;
         if (age >= this.decayTicks) {
             return 13;
         }

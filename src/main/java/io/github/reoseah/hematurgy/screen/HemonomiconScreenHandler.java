@@ -87,9 +87,9 @@ public class HemonomiconScreenHandler extends ScreenHandler {
         for (int i = 0; i < 16; i++) {
             var stack = this.getSlot(i).getStack();
             if (stack != null && stack.isOf(BloodItem.INSTANCE)) {
-                var time = stack.get(BloodItem.CREATION_TIME);
-                if (time != null && time.isPresent()) {
-                    stack.set(BloodItem.CREATION_TIME, Optional.of(time.get() - 20 * 10));
+                var time = stack.get(BloodItem.TIMESTAMP);
+                if (time != null ) {
+                    stack.set(BloodItem.TIMESTAMP, time - 20 * 10);
                 }
             }
         }

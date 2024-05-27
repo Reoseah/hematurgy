@@ -1,12 +1,9 @@
 package io.github.reoseah.hematurgy.item;
 
 
-import com.mojang.datafixers.util.Unit;
-import com.mojang.serialization.Codec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipType;
-import net.minecraft.component.DataComponentType;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -27,21 +23,20 @@ import java.util.List;
 public class SentientBladeItem extends SwordItem implements EchobladeCapableItem, RitualHarvestCapableItem {
     public static final Item INSTANCE = new SentientBladeItem(HematurgyMaterials.SENTIENT_BLADE, 3, -2.4F, new Settings());
 
-    public static final DataComponentType<Unit> HAS_ECHOBLADE = DataComponentType.<Unit>builder().codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)).build();
-    public static final DataComponentType<Unit> HAS_RITUAL_HARVEST = DataComponentType.<Unit>builder().codec(Codec.unit(Unit.INSTANCE)).packetCodec(PacketCodec.unit(Unit.INSTANCE)).build();
-
     public SentientBladeItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
         super(toolMaterial, settings.component(DataComponentTypes.ATTRIBUTE_MODIFIERS, createAttributeModifiers(toolMaterial, attackDamage, attackSpeed)));
     }
 
     @Override
     public boolean hasEchoblade(ItemStack stack) {
-        return stack.getComponents().contains(HAS_ECHOBLADE);
+        var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
+        return ability != null && ability == RitualWeaponAbilityComponent.ECHOBLADE;
     }
 
     @Override
     public boolean hasRitualHarvest(ItemStack stack) {
-        return stack.getComponents().contains(HAS_RITUAL_HARVEST);
+        var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
+        return ability != null && ability == RitualWeaponAbilityComponent.HARVEST;
     }
 
     @Override
@@ -50,7 +45,7 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
         EchobladeCapableItem.insertTooltip(stack, tooltip);
         if (this.hasRitualHarvest(stack)) {
             tooltip.add(Text.translatable("hematurgy.ritual_harvest.tooltip").formatted(Formatting.GRAY));
-            RitualHarvestCapableItem.addTooltip(stack, tooltip);
+            RitualHarvestCapableItem.addTooltip(stack, tooltip, context, type);
         }
     }
 
