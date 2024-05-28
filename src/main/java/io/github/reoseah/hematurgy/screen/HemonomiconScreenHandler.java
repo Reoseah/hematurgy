@@ -27,8 +27,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
 public class HemonomiconScreenHandler extends ScreenHandler {
     public static final ScreenHandlerType<HemonomiconScreenHandler> TYPE = new ScreenHandlerType<>(HemonomiconScreenHandler::new, FeatureFlags.DEFAULT_ENABLED_FEATURES);
 
@@ -88,7 +86,7 @@ public class HemonomiconScreenHandler extends ScreenHandler {
             var stack = this.getSlot(i).getStack();
             if (stack != null && stack.isOf(BloodItem.INSTANCE)) {
                 var time = stack.get(BloodItem.TIMESTAMP);
-                if (time != null ) {
+                if (time != null) {
                     stack.set(BloodItem.TIMESTAMP, time - 20 * 10);
                 }
             }
@@ -173,8 +171,10 @@ public class HemonomiconScreenHandler extends ScreenHandler {
         if (this.utteranceRecipe != null) {
             var recipeDuration = this.utteranceRecipe.duration;
             if (player.getWorld().getTime() - this.utteranceStart >= recipeDuration * player.getWorld().getTickManager().getTickRate()) {
-                this.utteranceRecipe.craft(this.inventory, player.getWorld(), player, this::insertResult);
-
+                ItemStack result = this.utteranceRecipe.craft(this.inventory, player.getWorld(), player);
+                if (!result.isEmpty()) {
+                    this.insertResult(result, player);
+                }
                 this.stopUtterance();
             }
         }

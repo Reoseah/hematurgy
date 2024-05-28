@@ -30,7 +30,7 @@ public class HemonomiconRepairRecipe extends HemonomiconRecipe {
     }
 
     @Override
-    public void craft(Inventory inventory, World world, PlayerEntity player, BiConsumer<ItemStack, PlayerEntity> insertResult) {
+    public ItemStack craft(Inventory inventory, World world, PlayerEntity player) {
         ItemStack item = inventory.getStack(0);
 //        ItemStack material = inventory.getStack(1);
         ItemStack result = item.copy();
@@ -39,7 +39,7 @@ public class HemonomiconRepairRecipe extends HemonomiconRecipe {
         inventory.removeStack(0, 1);
         inventory.removeStack(1, 1);
 
-        insertResult.accept(result, player);
+        return result;
     }
 
     @Override

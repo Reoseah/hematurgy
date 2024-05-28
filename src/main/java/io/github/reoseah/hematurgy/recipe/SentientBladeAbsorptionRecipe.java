@@ -43,15 +43,15 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
     }
 
     @Override
-    public void craft(Inventory inventory, World world, PlayerEntity player, BiConsumer<ItemStack, PlayerEntity> insertResult) {
+    public ItemStack craft(Inventory inventory, World world, PlayerEntity player) {
         ItemStack target = inventory.getStack(0);
         if (!target.isOf(SentientBladeItem.INSTANCE)) {
-            return;
+            return ItemStack.EMPTY;
         }
 
         ItemStack material = inventory.getStack(1);
         if (material.isOf(SentientBladeItem.INSTANCE)) {
-            return;
+            return ItemStack.EMPTY;
         }
         List<Ability> abilities = Ability.getAbsorbableAbilities(target, material);
 
@@ -63,8 +63,9 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
             inventory.removeStack(0, 1);
             inventory.removeStack(1, 1);
 
-            insertResult.accept(result, player);
+            return result;
         }
+        return ItemStack.EMPTY;
     }
 
     @Override

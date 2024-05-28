@@ -41,7 +41,7 @@ public class HemonomiconCraftingRecipe extends HemonomiconRecipe {
     }
 
     @Override
-    public void craft(Inventory inventory, World world, PlayerEntity player, BiConsumer<ItemStack, PlayerEntity> insertResult) {
+    public ItemStack craft(Inventory inventory, World world, PlayerEntity player) {
         ItemStack result = this.getResult(world.getRegistryManager());
 
         int count = result.getMaxCount();
@@ -56,7 +56,7 @@ public class HemonomiconCraftingRecipe extends HemonomiconRecipe {
         }
         result = result.copyWithCount(count);
 
-        insertResult.accept(result, player);
+        return result;
     }
 
     @Override

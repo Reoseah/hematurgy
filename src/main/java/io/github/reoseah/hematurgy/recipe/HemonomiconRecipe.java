@@ -51,7 +51,7 @@ public abstract class HemonomiconRecipe implements Recipe<Inventory> {
         throw new UnsupportedOperationException();
     }
 
-    public abstract void craft(Inventory inventory, World world, PlayerEntity player, BiConsumer<ItemStack, PlayerEntity> insertResult);
+    public abstract ItemStack craft(Inventory inventory, World world, PlayerEntity player);
 
     public static class SpecialSerializer<T extends HemonomiconRecipe> implements RecipeSerializer<T> {
         private final BiFunction<Identifier, Integer, T> constructor;

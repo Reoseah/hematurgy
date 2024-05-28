@@ -36,10 +36,11 @@ public class DrawBloodRecipe extends HemonomiconRecipe {
     }
 
     @Override
-    public void craft(Inventory inventory, World world, PlayerEntity player, BiConsumer<ItemStack, PlayerEntity> insertResult) {
+    public ItemStack craft(Inventory inventory, World world, PlayerEntity player) {
         if (player.isCreative()
                 || player.damage(world.getDamageSources().create(Hematurgy.HEMONOMICON_DAMAGE), 10F)) {
-            insertResult.accept(new ItemStack(BloodItem.INSTANCE), player);
+            return new ItemStack(BloodItem.INSTANCE);
         }
+        return ItemStack.EMPTY;
     }
 }
