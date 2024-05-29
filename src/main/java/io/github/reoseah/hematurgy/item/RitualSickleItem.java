@@ -1,6 +1,7 @@
 package io.github.reoseah.hematurgy.item;
 
 
+import io.github.reoseah.hematurgy.Hematurgy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipType;
@@ -19,6 +20,7 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -40,14 +42,26 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        RitualHarvestCapableItem.addTooltip(stack, tooltip, context, type);
+        var target = stack.get(BloodSourceComponent.TYPE);
+        if (target != null) {
+            target.appendTooltip(context, tooltip::add, type);
+        }
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (user.isSneaking()) {
-            return RitualHarvestCapableItem.onUse(world, user, stack);
+            if (RitualHarvestCapableItem.hasTarget(stack)) {
+                stack.remove(BloodSourceComponent.TYPE);
+                return TypedActionResult.success(stack);
+            } else {
+                if (user.isCreative() || user.damage(world.getDamageSources().playerAttack(user), 2) && user.isAlive()) {
+                    stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(user));
+                    return TypedActionResult.success(stack);
+                }
+                return TypedActionResult.fail(stack);
+            }
         }
         return super.use(world, user, hand);
     }
@@ -55,14 +69,26 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         super.postHit(stack, target, attacker);
-        RitualHarvestCapableItem.onPostHit(stack, target);
+        if (stack.getItem() instanceof RitualHarvestCapableItem item && item.hasRitualHarvest(stack)) {
+            boolean targetDead = !target.isAlive();
+            if (targetDead && target.getType().isIn(Hematurgy.HAS_RITUAL_BLOOD)) {
+                int max = Math.max(1, (int) (target.getMaxHealth() / 20F));
+                target.dropItem(BloodItem.INSTANCE, MathHelper.nextBetween(target.getRandom(), 1, max));
+            }
+        }
         return true;
     }
 
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-        RitualHarvestCapableItem.onInventoryTick(stack, world);
+        var target = stack.get(BloodSourceComponent.TYPE);
+        if (target != null) {
+            long age = world.getTime() - target.timestamp();
+            if (age > 20 * 30) {
+                stack.remove(BloodSourceComponent.TYPE);
+            }
+        }
     }
 
     @Override
@@ -79,14 +105,28 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
     @Override
     @Environment(EnvType.CLIENT)
     public int getItemBarStep(ItemStack stack) {
-        return RitualHarvestCapableItem.hasTarget(stack) ? RitualHarvestCapableItem.getItemBarStep(stack) : super.getItemBarStep(stack);
+        if (RitualHarvestCapableItem.hasTarget(stack)) {
+            var target = stack.get(BloodSourceComponent.TYPE);
+            if (target == null) {
+                return 0;
+            }
+
+            return target.getItemBarLength();
+        } else {
+            return super.getItemBarStep(stack);
+        }
     }
 
     @Override
     @Environment(EnvType.CLIENT)
     public int getItemBarColor(ItemStack stack) {
         if (RitualHarvestCapableItem.hasTarget(stack)) {
-            return RitualHarvestCapableItem.getItemBarColor(stack);
+            var target = stack.get(BloodSourceComponent.TYPE);
+            if (target == null) {
+                return 0;
+            }
+
+            return target.getItemBarColor();
         }
         return super.getItemBarColor(stack);
     }

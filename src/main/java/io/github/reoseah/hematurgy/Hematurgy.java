@@ -71,6 +71,7 @@ public class Hematurgy implements ModInitializer {
             .entries((context, entries) -> {
                 entries.add(HemonomiconItem.INSTANCE);
                 entries.add(RitualSickleItem.INSTANCE);
+                entries.add(SyringeItem.INSTANCE);
                 entries.add(BloodCrystalSwordItem.INSTANCE);
                 entries.add(RitualDaggerItem.INSTANCE);
                 entries.add(EchobladeCapableItem.setEchobladeLevel(new ItemStack(RitualDaggerItem.INSTANCE), EchobladeCapableItem.MAX_LEVEL), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
@@ -98,6 +99,7 @@ public class Hematurgy implements ModInitializer {
 
         Registry.register(Registries.ITEM, "hematurgy:hemonomicon", HemonomiconItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ritual_sickle", RitualSickleItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:syringe", SyringeItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:blood_crystal_sword", BloodCrystalSwordItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ritual_dagger", RitualDaggerItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:sentient_blade", SentientBladeItem.INSTANCE);
@@ -185,8 +187,14 @@ public class Hematurgy implements ModInitializer {
     }
 
     private static ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult) {
-        if (RitualHarvestCapableItem.tryInteract(player, world, hand, entity)) {
-            return ActionResult.SUCCESS;
+        if (!player.isSpectator() && entity.getType().isIn(HAS_RITUAL_BLOOD)) {
+            ItemStack stack = player.getStackInHand(hand);
+            if (stack.getItem() instanceof RitualHarvestCapableItem item && item.hasRitualHarvest(stack) && !RitualHarvestCapableItem.hasTarget(stack)) {
+                if (entity.damage(world.getDamageSources().playerAttack(player), 2) && entity.isAlive()) {
+                    stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(entity));
+                }
+                return ActionResult.SUCCESS;
+            }
         }
         return ActionResult.PASS;
     }

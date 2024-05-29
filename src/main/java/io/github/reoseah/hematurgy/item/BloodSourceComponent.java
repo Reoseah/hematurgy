@@ -11,15 +11,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.TooltipAppender;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Uuids;
-import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -47,9 +44,9 @@ public record BloodSourceComponent(UUID uuid, String name, boolean isPlayer, lon
         }
     };
 
-    public static final DataComponentType<Optional<BloodSourceComponent>> TYPE = DataComponentType.<Optional<BloodSourceComponent>>builder()
-            .codec(Codecs.optional(CODEC))
-            .packetCodec(PacketCodecs.optional(PACKET_CODEC))
+    public static final DataComponentType<BloodSourceComponent> TYPE = DataComponentType.<BloodSourceComponent>builder()
+            .codec(CODEC)
+            .packetCodec(PACKET_CODEC)
             .build();
 
     public static BloodSourceComponent of(Entity entity) {
