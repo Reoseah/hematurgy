@@ -2,9 +2,7 @@
   "required": true,
   "package": "io.github.reoseah.hematurgy.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "ItemStackMixin", "LecternBlockMixin", "SlotMixin"
-  ],
+  "mixins": ["ItemStackMixin", "LecternBlockMixin", "MobEntityMixin", "SlotMixin"],
   "injectors": {
     "defaultRequire": 1
   }

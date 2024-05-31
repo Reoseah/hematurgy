@@ -6,7 +6,6 @@ import net.minecraft.text.Text;
 import java.util.UUID;
 
 public interface RitualHarvestCapableItem {
-
     /*
      * Returns whether stack should have Ritual Harvest effect.
      *
@@ -15,8 +14,9 @@ public interface RitualHarvestCapableItem {
     boolean hasRitualHarvest(ItemStack stack);
 
     static boolean hasTarget(ItemStack stack) {
-        var target = stack.get(BloodSourceComponent.TYPE);
-        return stack.getItem() instanceof RitualHarvestCapableItem item && item.hasRitualHarvest(stack) && target != null;
+        return (stack.isOf(RitualSickleItem.INSTANCE)  //
+                || stack.isOf(SentientBladeItem.INSTANCE) && stack.get(RitualWeaponAbilityComponent.TYPE) == RitualWeaponAbilityComponent.HARVEST) //
+                && stack.contains(BloodSourceComponent.TYPE);
     }
 
     static UUID getTargetUUID(ItemStack stack) {

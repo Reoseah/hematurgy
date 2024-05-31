@@ -23,10 +23,10 @@ import java.util.function.Consumer;
 public record BloodSourceComponent(UUID uuid, String name, boolean isPlayer, long timestamp)
         implements TooltipAppender {
     public static final Codec<BloodSourceComponent> CODEC = RecordCodecBuilder.create(instance -> instance
-            .group(Uuids.CODEC.fieldOf("TargetUUID").forGetter(BloodSourceComponent::uuid),
-                    Codec.STRING.fieldOf("TargetName").forGetter(BloodSourceComponent::name),
-                    Codec.BOOL.fieldOf("TargetIsPlayer").forGetter(BloodSourceComponent::isPlayer),
-                    Codec.LONG.fieldOf("TargetSetTime").forGetter(BloodSourceComponent::timestamp))
+            .group(Uuids.CODEC.fieldOf("uuid").forGetter(BloodSourceComponent::uuid),
+                    Codec.STRING.fieldOf("name").forGetter(BloodSourceComponent::name),
+                    Codec.BOOL.fieldOf("is_player").forGetter(BloodSourceComponent::isPlayer),
+                    Codec.LONG.fieldOf("timestamp").forGetter(BloodSourceComponent::timestamp))
             .apply(instance, BloodSourceComponent::new));
 
     public static final PacketCodec<PacketByteBuf, BloodSourceComponent> PACKET_CODEC = new PacketCodec<>() {

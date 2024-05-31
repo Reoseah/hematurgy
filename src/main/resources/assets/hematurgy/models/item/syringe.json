@@ -1,6 +1,14 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/handheld",
   "textures": {
     "layer0": "hematurgy:item/syringe"
-  }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "hematurgy:has_target": 1
+      },
+      "model": "hematurgy:item/syringe_with_blood"
+    }
+  ]
 }

@@ -52,7 +52,7 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         if (user.isSneaking()) {
-            if (RitualHarvestCapableItem.hasTarget(stack)) {
+            if (stack.contains(BloodSourceComponent.TYPE)) {
                 stack.remove(BloodSourceComponent.TYPE);
                 return TypedActionResult.success(stack);
             } else {
@@ -93,25 +93,25 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
 
     @Override
     public String getTranslationKey(ItemStack stack) {
-        return RitualHarvestCapableItem.hasTarget(stack) ? "item.hematurgy.ritual_sickle.with_blood" : this.getTranslationKey();
+        return stack.contains(BloodSourceComponent.TYPE) ? "item.hematurgy.ritual_sickle.with_blood" : this.getTranslationKey();
     }
 
     @Override
     @Environment(EnvType.CLIENT)
     public boolean isItemBarVisible(ItemStack stack) {
-        return RitualHarvestCapableItem.hasTarget(stack) || super.isItemBarVisible(stack);
+        return stack.contains(BloodSourceComponent.TYPE) || super.isItemBarVisible(stack);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
     public int getItemBarStep(ItemStack stack) {
-        if (RitualHarvestCapableItem.hasTarget(stack)) {
-            var target = stack.get(BloodSourceComponent.TYPE);
-            if (target == null) {
+        if (stack.contains(BloodSourceComponent.TYPE)) {
+            var source = stack.get(BloodSourceComponent.TYPE);
+            if (source == null) {
                 return 0;
             }
 
-            return target.getItemBarLength();
+            return source.getItemBarLength();
         } else {
             return super.getItemBarStep(stack);
         }
@@ -120,13 +120,13 @@ public class RitualSickleItem extends SwordItem implements RitualHarvestCapableI
     @Override
     @Environment(EnvType.CLIENT)
     public int getItemBarColor(ItemStack stack) {
-        if (RitualHarvestCapableItem.hasTarget(stack)) {
-            var target = stack.get(BloodSourceComponent.TYPE);
-            if (target == null) {
+        if (stack.contains(BloodSourceComponent.TYPE)) {
+            var source = stack.get(BloodSourceComponent.TYPE);
+            if (source == null) {
                 return 0;
             }
 
-            return target.getItemBarColor();
+            return source.getItemBarColor();
         }
         return super.getItemBarColor(stack);
     }

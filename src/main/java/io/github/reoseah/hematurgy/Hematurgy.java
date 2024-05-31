@@ -14,6 +14,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.LecternBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LecternBlockEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -72,6 +73,14 @@ public class Hematurgy implements ModInitializer {
                 entries.add(HemonomiconItem.INSTANCE);
                 entries.add(RitualSickleItem.INSTANCE);
                 entries.add(SyringeItem.INSTANCE);
+//                var player = safelyGetClientPlayer();
+//                if (player != null) {
+//                    ItemStack stack = new ItemStack(SyringeItem.INSTANCE);
+//                    stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(player));
+//                    entries.add(stack);
+//                }
+                entries.add(EnthralmentInfusionItem.INSTANCE);
+
                 entries.add(BloodCrystalSwordItem.INSTANCE);
                 entries.add(RitualDaggerItem.INSTANCE);
                 entries.add(EchobladeCapableItem.setEchobladeLevel(new ItemStack(RitualDaggerItem.INSTANCE), EchobladeCapableItem.MAX_LEVEL), ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
@@ -100,6 +109,7 @@ public class Hematurgy implements ModInitializer {
         Registry.register(Registries.ITEM, "hematurgy:hemonomicon", HemonomiconItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ritual_sickle", RitualSickleItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:syringe", SyringeItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:enthrallment_infusion", EnthralmentInfusionItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:blood_crystal_sword", BloodCrystalSwordItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ritual_dagger", RitualDaggerItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:sentient_blade", SentientBladeItem.INSTANCE);
@@ -194,12 +204,24 @@ public class Hematurgy implements ModInitializer {
                     stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(entity));
                 }
                 return ActionResult.SUCCESS;
+            } else if (stack.isOf(SyringeItem.INSTANCE)) {
+                if (entity.damage(world.getDamageSources().playerAttack(player), 1)
+                        && entity.damage(world.getDamageSources().create(Hematurgy.HEMONOMICON_DAMAGE), SyringeItem.DAMAGE)
+                        && entity.isAlive()) {
+                    stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(entity));
+                    stack.set(DataComponentTypes.RARITY, Rarity.RARE);
+                }
+                return ActionResult.SUCCESS;
             }
         }
         return ActionResult.PASS;
     }
 
     public static World safelyGetClientWorld() {
+        return null;
+    }
+
+    public static PlayerEntity safelyGetClientPlayer() {
         return null;
     }
 }
