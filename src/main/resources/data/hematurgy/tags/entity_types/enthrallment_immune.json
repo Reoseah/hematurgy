@@ -1,0 +1,15 @@
+{
+  "values": [
+    "#minecraft:undead",
+    "#minecraft:arthropod",
+    "minecraft:blaze",
+    "minecraft:slime",
+    "minecraft:magma_cube",
+    "minecraft:iron_golem",
+    "minecraft:snow_golem",
+    "minecraft:shulker",
+    "minecraft:allay",
+    "minecraft:ghast",
+    { "id": "minecraft:breeze", "required": false }
+  ]
+}

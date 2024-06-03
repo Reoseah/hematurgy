@@ -256,7 +256,7 @@
         {
           "type": "inventory",
           "slots": [
-            { "x": 9, "y": 4, "ingredient": { "tag": "hematurgy:repairable_through_hematurgy" }, "background": "hematurgy:item/placeholder/question_mark" },
+            { "x": 9, "y": 4, "ingredient": { "tag": "hematurgy:repairable_through_mend_iron" }, "background": "hematurgy:item/placeholder/question_mark" },
             { "x": 27, "y": 4, "ingredient": { "tag": "hematurgy:blood" }, "background": "hematurgy:item/placeholder/blood" },
             { "x": 70, "y": 4, "output": true, "background": "hematurgy:item/placeholder/question_mark" }
           ],

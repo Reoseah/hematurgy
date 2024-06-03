@@ -1,5 +1,6 @@
 package io.github.reoseah.hematurgy.item;
 
+import io.github.reoseah.hematurgy.Hematurgy;
 import io.github.reoseah.hematurgy.entity.Enthrallable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -19,11 +20,18 @@ public class EnthralmentInfusionItem extends Item {
 
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-        if (entity instanceof MobEntity mob && mob.isAlive() && !mob.isBlocking() && mob.getMaxHealth() <= 100
-                && mob instanceof Enthrallable enthrallable && enthrallable.getMasterUuid() == null) {
+        if (entity instanceof MobEntity mob
+                && !mob.getType().isIn(Hematurgy.ENTHRALLMENT_IMMUNE)
+                && mob.isAlive()
+                && !mob.isBlocking()
+                && mob.getMaxHealth() <= 100
+                && mob instanceof Enthrallable enthrallable
+                && enthrallable.hematurgy$getMasterUuid() == null) {
             if (!user.getWorld().isClient) {
-                enthrallable.setMaster(user);
+                // TODO: track the creator of the item, not the user
+                enthrallable.hematurgy$setMasterUuid(user.getUuid());
                 stack.decrement(1);
+                user.getInventory().insertStack(new ItemStack(SyringeItem.INSTANCE));
             }
             return ActionResult.success(user.getWorld().isClient);
         }

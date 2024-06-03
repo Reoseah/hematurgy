@@ -25,6 +25,8 @@ public class HematurgyClient implements ClientModInitializer {
         ModelPredicateProviderRegistry.register(SyringeItem.INSTANCE, new Identifier("hematurgy:has_target"),
                 (stack, world, entity, seed) -> stack.contains(BloodSourceComponent.TYPE) ? 1F : 0F);
 
+
+
         ResourceManagerHelperImpl.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new BookLoader());
 
         HandledScreens.register(HemonomiconScreenHandler.TYPE, HemonomiconScreen::new);

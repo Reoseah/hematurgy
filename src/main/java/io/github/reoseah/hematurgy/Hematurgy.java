@@ -1,5 +1,6 @@
 package io.github.reoseah.hematurgy;
 
+import io.github.reoseah.hematurgy.entity.ApotheosisEffect;
 import io.github.reoseah.hematurgy.item.*;
 import io.github.reoseah.hematurgy.network.HemonomiconNetworking;
 import io.github.reoseah.hematurgy.recipe.*;
@@ -80,6 +81,7 @@ public class Hematurgy implements ModInitializer {
 //                    entries.add(stack);
 //                }
                 entries.add(EnthralmentInfusionItem.INSTANCE);
+                entries.add(ApotheosisInfusionItem.INSTANCE);
 
                 entries.add(BloodCrystalSwordItem.INSTANCE);
                 entries.add(RitualDaggerItem.INSTANCE);
@@ -96,11 +98,14 @@ public class Hematurgy implements ModInitializer {
             }) //
             .build();
 
-
     public static final RegistryKey<DamageType> HEMONOMICON_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("hematurgy:hemonomicon"));
+    public static final RegistryKey<DamageType> SYRINGE_DAMAGE = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier("hematurgy:syringe"));
 
     public static final TagKey<Item> HAS_RED_NAME = TagKey.of(RegistryKeys.ITEM, new Identifier("hematurgy:has_red_name"));
+    public static final TagKey<Item> ONLY_REPAIRABLE_THROUGH_MEND_IRON = TagKey.of(RegistryKeys.ITEM, new Identifier("hematurgy:only_repairable_through_mend_iron"));
+
     public static final TagKey<EntityType<?>> HAS_RITUAL_BLOOD = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("hematurgy", "has_blood"));
+    public static final TagKey<EntityType<?>> ENTHRALLMENT_IMMUNE = TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("hematurgy", "enthrallment_immune"));
 
     @Override
     public void onInitialize() {
@@ -110,6 +115,7 @@ public class Hematurgy implements ModInitializer {
         Registry.register(Registries.ITEM, "hematurgy:ritual_sickle", RitualSickleItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:syringe", SyringeItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:enthrallment_infusion", EnthralmentInfusionItem.INSTANCE);
+        Registry.register(Registries.ITEM, "hematurgy:apotheosis_infusion", ApotheosisInfusionItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:blood_crystal_sword", BloodCrystalSwordItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:ritual_dagger", RitualDaggerItem.INSTANCE);
         Registry.register(Registries.ITEM, "hematurgy:sentient_blade", SentientBladeItem.INSTANCE);
@@ -139,6 +145,8 @@ public class Hematurgy implements ModInitializer {
         Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:hemonomicon_crafting", HemonomiconCraftingRecipe.Serializer.INSTANCE);
         Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:hemonomicon_repair", HemonomiconRepairRecipe.Serializer.INSTANCE);
         Registry.register(Registries.RECIPE_SERIALIZER, "hematurgy:sentient_blade_absorption", SentientBladeAbsorptionRecipe.SERIALIZER);
+
+        Registry.register(Registries.STATUS_EFFECT, "hematurgy:apotheosis", ApotheosisEffect.INSTANCE);
 
         LootTableEvents.MODIFY.register(Hematurgy::modifyLootTable);
         UseBlockCallback.EVENT.register(Hematurgy::interact);
@@ -199,15 +207,15 @@ public class Hematurgy implements ModInitializer {
     private static ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult) {
         if (!player.isSpectator() && entity.getType().isIn(HAS_RITUAL_BLOOD)) {
             ItemStack stack = player.getStackInHand(hand);
-            if (stack.getItem() instanceof RitualHarvestCapableItem item && item.hasRitualHarvest(stack) && !RitualHarvestCapableItem.hasTarget(stack)) {
+            if (stack.getItem() instanceof RitualHarvestCapableItem item && item.hasRitualHarvest(stack) && !stack.contains(BloodSourceComponent.TYPE)) {
                 if (entity.damage(world.getDamageSources().playerAttack(player), 2) && entity.isAlive()) {
                     stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(entity));
                 }
                 return ActionResult.SUCCESS;
             } else if (stack.isOf(SyringeItem.INSTANCE)) {
-                if (entity.damage(world.getDamageSources().playerAttack(player), 1)
-                        && entity.damage(world.getDamageSources().create(Hematurgy.HEMONOMICON_DAMAGE), SyringeItem.DAMAGE)
-                        && entity.isAlive()) {
+                if (entity.damage(world.getDamageSources().create(SYRINGE_DAMAGE, player), 1)
+                        && entity.isAlive()
+                        && entity.damage(world.getDamageSources().create(Hematurgy.HEMONOMICON_DAMAGE), SyringeItem.DAMAGE)) {
                     stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(entity));
                     stack.set(DataComponentTypes.RARITY, Rarity.RARE);
                 }

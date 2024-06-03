@@ -12,10 +12,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface EchobladeCapableItem {
@@ -60,13 +57,6 @@ public interface EchobladeCapableItem {
             stack.set(DataComponentTypes.ATTRIBUTE_MODIFIERS, builder.build());
         }
         return stack;
-    }
-
-    static void insertTooltip(ItemStack stack, List<Text> tooltip) {
-        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
-            int level = EchobladeCapableItem.getEchobladeLevel(stack);
-            tooltip.add(1, Text.translatable("hematurgy.echoblade.tooltip", Text.translatable("enchantment.level." + level)).formatted(Formatting.GRAY));
-        }
     }
 
     static void onPostHit(ItemStack stack, LivingEntity target) {

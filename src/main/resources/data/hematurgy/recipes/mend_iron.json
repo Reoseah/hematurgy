@@ -3,7 +3,7 @@
   "utterance": "hematurgy:recipe/mend_iron",
   "duration": 10,
   "item": {
-    "tag": "hematurgy:mend_iron_repairable"
+    "tag": "hematurgy:repairable_through_mend_iron"
   },
   "material": {
     "tag": "hematurgy:blood"

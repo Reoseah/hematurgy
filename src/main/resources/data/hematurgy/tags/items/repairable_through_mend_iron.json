@@ -1,8 +1,7 @@
 {
   "values": [
     "hematurgy:ritual_sickle",
-    "hematurgy:ritual_dagger",
-    "hematurgy:sentient_blade",
+    "#hematurgy:only_repairable_through_mend_iron",
     "minecraft:iron_sword",
     "minecraft:iron_pickaxe",
     "minecraft:iron_axe",

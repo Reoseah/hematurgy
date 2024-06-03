@@ -13,7 +13,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -25,31 +24,19 @@ import java.util.UUID;
 public interface Enthrallable {
     TrackedData<Optional<UUID>> MASTER_UUID = DataTracker.registerData(MobEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
 
-    // TODO rename these to hematurgy$blahBlah?
+    @Nullable
+    UUID hematurgy$getMasterUuid();
 
-    @Nullable UUID getMasterUuid();
+    void hematurgy$setMasterUuid(@Nullable UUID uuid);
 
-    void setMasterUuid(@Nullable UUID uuid);
-
-    default boolean isEnthralled() {
-        return this.getMasterUuid() != null;
-    }
-
-    default void setMaster(PlayerEntity player) {
-        this.setMasterUuid(player.getUuid());
-    }
-
+    @Nullable
     default LivingEntity getMaster(World world) {
         try {
-            UUID uUID = this.getMasterUuid();
-            return uUID != null ? world.getPlayerByUuid(uUID) : null;
+            var uuid = this.hematurgy$getMasterUuid();
+            return uuid != null ? world.getPlayerByUuid(uuid) : null;
         } catch (IllegalArgumentException exception) {
             return null;
         }
-    }
-
-    default boolean isMaster(LivingEntity entity) {
-        return entity == this.getMaster(entity.getWorld());
     }
 
     /**
@@ -191,7 +178,7 @@ public interface Enthrallable {
 
         @Override
         public boolean canStart() {
-            if (((Enthrallable) this.mob).getMasterUuid() == null) {
+            if (((Enthrallable) this.mob).hematurgy$getMasterUuid() == null) {
                 return false;
             }
             LivingEntity master = ((Enthrallable) this.mob).getMaster(this.mob.getWorld());
@@ -230,7 +217,7 @@ public interface Enthrallable {
 
         @Override
         public boolean canStart() {
-            if (((Enthrallable) this.mob).getMasterUuid() == null) {
+            if (((Enthrallable) this.mob).hematurgy$getMasterUuid() == null) {
                 return false;
             }
             LivingEntity master = ((Enthrallable) this.mob).getMaster(this.mob.getWorld());

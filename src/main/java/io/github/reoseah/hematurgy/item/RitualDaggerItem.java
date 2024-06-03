@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Rarity;
 
 import java.util.List;
@@ -22,7 +23,10 @@ public class RitualDaggerItem extends SwordItem implements EchobladeCapableItem 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        EchobladeCapableItem.insertTooltip(stack, tooltip);
+        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
+            int level = EchobladeCapableItem.getEchobladeLevel(stack);
+            tooltip.add(1, Text.translatable("hematurgy.echoblade.tooltip", Text.translatable("enchantment.level." + level)).formatted(Formatting.GRAY));
+        }
     }
 
     @Override

@@ -39,11 +39,10 @@ public abstract class MobEntityMixin extends LivingEntity implements Enthrallabl
         builder.add(Enthrallable.MASTER_UUID, Optional.empty());
     }
 
-
     @Inject(at = @At("RETURN"), method = "writeCustomDataToNbt")
     public void onWriteCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-        if (this.getMasterUuid() != null) {
-            nbt.putUuid("ThrallMasterUUID", this.getMasterUuid());
+        if (this.hematurgy$getMasterUuid() != null) {
+            nbt.putUuid("ThrallMasterUUID", this.hematurgy$getMasterUuid());
         }
     }
 
@@ -58,7 +57,7 @@ public abstract class MobEntityMixin extends LivingEntity implements Enthrallabl
         }
         if (uuid != null) {
             try {
-                this.setMasterUuid(uuid);
+                this.hematurgy$setMasterUuid(uuid);
             } catch (Throwable ignored) {
             }
         }
@@ -66,8 +65,8 @@ public abstract class MobEntityMixin extends LivingEntity implements Enthrallabl
 
     @Inject(at = @At("HEAD"), method = "dropEquipment")
     protected void onDropEquipment(DamageSource source, int lootingMultiplier, boolean allowDrops, CallbackInfo ci) {
-        if (this.isEnthralled()) {
-            this.setMasterUuid(null);
+        if (this.hematurgy$getMasterUuid() != null) {
+            this.hematurgy$setMasterUuid(null);
         }
     }
 
@@ -81,18 +80,18 @@ public abstract class MobEntityMixin extends LivingEntity implements Enthrallabl
 
     @Inject(at = @At("HEAD"), method = "cannotDespawn", cancellable = true)
     public void onCannotDespawn(CallbackInfoReturnable<Boolean> cir) {
-        if (this.isEnthralled()) {
+        if (this.hematurgy$getMasterUuid() != null) {
             cir.setReturnValue(true);
         }
     }
 
     @Override
-    public @Nullable UUID getMasterUuid() {
+    public @Nullable UUID hematurgy$getMasterUuid() {
         return this.dataTracker.get(Enthrallable.MASTER_UUID).orElse(null);
     }
 
     @Override
-    public void setMasterUuid(@Nullable UUID uuid) {
+    public void hematurgy$setMasterUuid(@Nullable UUID uuid) {
         this.dataTracker.set(Enthrallable.MASTER_UUID, Optional.ofNullable(uuid));
     }
 }

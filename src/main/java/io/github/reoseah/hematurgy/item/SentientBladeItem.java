@@ -44,7 +44,10 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        EchobladeCapableItem.insertTooltip(stack, tooltip);
+        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
+            int level = stack.get(EchobladeCapableItem.LEVEL);
+            tooltip.add(1, Text.translatable("hematurgy.echoblade.tooltip", Text.translatable("enchantment.level." + level)).formatted(Formatting.GRAY));
+        }
         if (this.hasRitualHarvest(stack)) {
             tooltip.add(Text.translatable("hematurgy.ritual_harvest.tooltip").formatted(Formatting.GRAY));
             var target = stack.get(BloodSourceComponent.TYPE);
