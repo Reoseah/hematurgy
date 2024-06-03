@@ -11,8 +11,6 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import java.util.function.BiConsumer;
-
 public class DrawBloodRecipe extends HemonomiconRecipe {
     public static final RecipeSerializer<DrawBloodRecipe> SERIALIZER = new SpecialSerializer<>(DrawBloodRecipe::new);
 

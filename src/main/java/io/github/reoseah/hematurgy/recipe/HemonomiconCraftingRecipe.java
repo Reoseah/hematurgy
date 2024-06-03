@@ -18,7 +18,6 @@ import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class HemonomiconCraftingRecipe extends HemonomiconRecipe {
     public final DefaultedList<Ingredient> ingredients;

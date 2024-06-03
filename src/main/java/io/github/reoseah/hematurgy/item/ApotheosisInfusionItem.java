@@ -19,8 +19,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class ApotheosisInfusionItem extends Item {
-    //    public static final int DURATION_SECONDS = 5 * 60 * 20;
-    public static final int DURATION = 10 * 20;
+    public static final int DURATION = 60 * 60 * 20;
 
     public static final Item INSTANCE = new ApotheosisInfusionItem(new Item.Settings().maxCount(1).rarity(Rarity.EPIC));
 

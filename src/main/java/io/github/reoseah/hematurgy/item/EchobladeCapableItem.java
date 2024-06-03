@@ -13,6 +13,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.codec.PacketCodecs;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface EchobladeCapableItem {
@@ -20,23 +21,9 @@ public interface EchobladeCapableItem {
     int MAX_LEVEL = 50;
     UUID DAMAGE_MODIFIER_ID = UUID.fromString("1e2ff367-b0d3-4d6b-a7fc-280c56fba663");
 
-    /**
-     * Returns whether stack should have Echoblade effect.
-     * <p>
-     * Ritual Dagger always has it, Sentient Blade has if it had absorbed a ritual dagger.
-     */
-    boolean hasEchoblade(ItemStack stack);
-
-    static int getEchobladeLevel(ItemStack stack) {
-        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
-            var level = stack.get(LEVEL);
-            return level != null ? level : 0;
-        }
-        return 0;
-    }
-
     static ItemStack setEchobladeLevel(ItemStack stack, int level) {
-        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
+        if (stack.isOf(RitualDaggerItem.INSTANCE)
+                || stack.isOf(SentientBladeItem.INSTANCE) && stack.get(SpecialAbilityComponent.TYPE) == SpecialAbilityComponent.ECHOBLADE) {
             stack.set(LEVEL, level);
 
             var builder = AttributeModifiersComponent.builder();
@@ -60,18 +47,16 @@ public interface EchobladeCapableItem {
     }
 
     static void onPostHit(ItemStack stack, LivingEntity target) {
-        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
+        if (stack.isOf(RitualDaggerItem.INSTANCE)
+                || stack.isOf(SentientBladeItem.INSTANCE) && stack.get(SpecialAbilityComponent.TYPE) == SpecialAbilityComponent.ECHOBLADE) {
             boolean targetDead = !target.isAlive();
+            int level = Optional.ofNullable(stack.get(LEVEL)).orElse(0);
             if (targetDead && target.getType().isIn(Hematurgy.HAS_RITUAL_BLOOD)) {
-                int level = EchobladeCapableItem.getEchobladeLevel(stack);
-                if (level < EchobladeCapableItem.MAX_LEVEL) {
-                    EchobladeCapableItem.setEchobladeLevel(stack, level + 1);
+                if (level < MAX_LEVEL) {
+                    setEchobladeLevel(stack, level + 1);
                 }
-            } else {
-                int level = EchobladeCapableItem.getEchobladeLevel(stack);
-                if (level > 0) {
-                    EchobladeCapableItem.setEchobladeLevel(stack, level - 1);
-                }
+            } else if (level > 0) {
+                setEchobladeLevel(stack, level - 1);
             }
         }
     }

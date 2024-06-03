@@ -201,7 +201,8 @@
         { "type": "heading", "translation_key": "hematurgy.decay_hemomancy" },
         { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.precarity" },
         { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.components" },
-        { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.text0" }
+        { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.text0" },
+        { "type": "paragraph", "translation_key": "hematurgy.decay_hemomancy.text1" }
       ],
       "right": [
         { "type": "heading", "translation_key": "hematurgy.decay_hemomancy.utterance_page_title" },

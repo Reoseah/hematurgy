@@ -74,12 +74,6 @@ public class Hematurgy implements ModInitializer {
                 entries.add(HemonomiconItem.INSTANCE);
                 entries.add(RitualSickleItem.INSTANCE);
                 entries.add(SyringeItem.INSTANCE);
-//                var player = safelyGetClientPlayer();
-//                if (player != null) {
-//                    ItemStack stack = new ItemStack(SyringeItem.INSTANCE);
-//                    stack.set(BloodSourceComponent.TYPE, BloodSourceComponent.of(player));
-//                    entries.add(stack);
-//                }
                 entries.add(EnthralmentInfusionItem.INSTANCE);
                 entries.add(ApotheosisInfusionItem.INSTANCE);
 
@@ -132,7 +126,7 @@ public class Hematurgy implements ModInitializer {
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:timestamp", BloodItem.TIMESTAMP);
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:target", BloodSourceComponent.TYPE);
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:echoblade_level", EchobladeCapableItem.LEVEL);
-        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:ritual_weapon_ability", RitualWeaponAbilityComponent.TYPE);
+        Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:ritual_weapon_ability", SpecialAbilityComponent.TYPE);
         Registry.register(Registries.DATA_COMPONENT_TYPE, "hematurgy:last_update", BloodCrystalSwordItem.LAST_TICK);
 
         Registry.register(Registries.ITEM_GROUP, "hematurgy:main", ITEM_GROUP);
@@ -226,10 +220,6 @@ public class Hematurgy implements ModInitializer {
     }
 
     public static World safelyGetClientWorld() {
-        return null;
-    }
-
-    public static PlayerEntity safelyGetClientPlayer() {
         return null;
     }
 }

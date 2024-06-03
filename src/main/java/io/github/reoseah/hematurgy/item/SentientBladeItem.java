@@ -30,29 +30,26 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     }
 
     @Override
-    public boolean hasEchoblade(ItemStack stack) {
-        var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
-        return ability != null && ability == RitualWeaponAbilityComponent.ECHOBLADE;
-    }
-
-    @Override
     public boolean hasRitualHarvest(ItemStack stack) {
-        var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
-        return ability != null && ability == RitualWeaponAbilityComponent.HARVEST;
+        return stack.get(SpecialAbilityComponent.TYPE) == SpecialAbilityComponent.SICKLE;
     }
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         super.appendTooltip(stack, context, tooltip, type);
-        if (stack.getItem() instanceof EchobladeCapableItem item && item.hasEchoblade(stack)) {
-            int level = stack.get(EchobladeCapableItem.LEVEL);
-            tooltip.add(1, Text.translatable("hematurgy.echoblade.tooltip", Text.translatable("enchantment.level." + level)).formatted(Formatting.GRAY));
-        }
-        if (this.hasRitualHarvest(stack)) {
-            tooltip.add(Text.translatable("hematurgy.ritual_harvest.tooltip").formatted(Formatting.GRAY));
-            var target = stack.get(BloodSourceComponent.TYPE);
-            if (target != null) {
-                target.appendTooltip(context, tooltip::add, type);
+        switch (stack.get(SpecialAbilityComponent.TYPE)) {
+            case ECHOBLADE -> {
+                var level = Text.translatable("enchantment.level." + stack.get(EchobladeCapableItem.LEVEL));
+                tooltip.add(1, Text.translatable("hematurgy.echoblade.tooltip", level).formatted(Formatting.GRAY));
+            }
+            case SICKLE -> {
+                tooltip.add(Text.translatable("hematurgy.ritual_harvest.tooltip").formatted(Formatting.GRAY));
+                var target = stack.get(BloodSourceComponent.TYPE);
+                if (target != null) {
+                    target.appendTooltip(context, tooltip::add, type);
+                }
+            }
+            case null -> {
             }
         }
     }
@@ -60,16 +57,16 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     @Override
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         super.postHit(stack, target, attacker);
-        if (this.hasEchoblade(stack)) {
-            EchobladeCapableItem.onPostHit(stack, target);
-        }
-        if (this.hasRitualHarvest(stack)) {
-            if (stack.getItem() instanceof RitualHarvestCapableItem item && item.hasRitualHarvest(stack)) {
+        switch (stack.get(SpecialAbilityComponent.TYPE)) {
+            case ECHOBLADE -> EchobladeCapableItem.onPostHit(stack, target);
+            case SICKLE -> {
                 boolean targetDead = !target.isAlive();
                 if (targetDead && target.getType().isIn(Hematurgy.HAS_RITUAL_BLOOD)) {
                     int max = Math.max(1, (int) (target.getMaxHealth() / 20F));
                     target.dropItem(BloodItem.INSTANCE, MathHelper.nextBetween(target.getRandom(), 1, max));
                 }
+            }
+            case null -> {
             }
         }
         return true;
@@ -78,8 +75,8 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        if (this.hasRitualHarvest(stack) && user.isSneaking()) {
-            if (RitualHarvestCapableItem.hasTarget(stack)) {
+        if (user.isSneaking() && stack.get(SpecialAbilityComponent.TYPE) == SpecialAbilityComponent.SICKLE) {
+            if (stack.contains(BloodSourceComponent.TYPE)) {
                 stack.remove(BloodSourceComponent.TYPE);
                 return TypedActionResult.success(stack);
             } else {
@@ -96,9 +93,9 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     @Override
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
-        var target = stack.get(BloodSourceComponent.TYPE);
-        if (target != null) {
-            long age = world.getTime() - target.timestamp();
+        var bloodComponent = stack.get(BloodSourceComponent.TYPE);
+        if (bloodComponent != null) {
+            long age = world.getTime() - bloodComponent.timestamp();
             if (age > 20 * 30) {
                 stack.remove(BloodSourceComponent.TYPE);
             }
@@ -108,19 +105,19 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     @Override
     @Environment(EnvType.CLIENT)
     public boolean isItemBarVisible(ItemStack stack) {
-        return RitualHarvestCapableItem.hasTarget(stack) || super.isItemBarVisible(stack);
+        return stack.contains(BloodSourceComponent.TYPE) || super.isItemBarVisible(stack);
     }
 
     @Override
     @Environment(EnvType.CLIENT)
     public int getItemBarStep(ItemStack stack) {
-        if (RitualHarvestCapableItem.hasTarget(stack)) {
-            var target = stack.get(BloodSourceComponent.TYPE);
-            if (target == null) {
+        if (stack.contains(BloodSourceComponent.TYPE)) {
+            var bloodComponent = stack.get(BloodSourceComponent.TYPE);
+            if (bloodComponent == null) {
                 return 0;
             }
 
-            return target.getItemBarLength();
+            return bloodComponent.getItemBarLength();
         } else {
             return super.getItemBarStep(stack);
         }
@@ -129,13 +126,13 @@ public class SentientBladeItem extends SwordItem implements EchobladeCapableItem
     @Override
     @Environment(EnvType.CLIENT)
     public int getItemBarColor(ItemStack stack) {
-        if (RitualHarvestCapableItem.hasTarget(stack)) {
-            var target = stack.get(BloodSourceComponent.TYPE);
-            if (target == null) {
+        if (stack.contains(BloodSourceComponent.TYPE)) {
+            var bloodComponent = stack.get(BloodSourceComponent.TYPE);
+            if (bloodComponent == null) {
                 return 0;
             }
 
-            return target.getItemBarColor();
+            return bloodComponent.getItemBarColor();
         }
         return super.getItemBarColor(stack);
     }

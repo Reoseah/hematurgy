@@ -15,8 +15,6 @@ import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.function.BiConsumer;
-
 public class HemonomiconRepairRecipe extends HemonomiconRecipe {
     public final Ingredient item;
     public final Ingredient material;

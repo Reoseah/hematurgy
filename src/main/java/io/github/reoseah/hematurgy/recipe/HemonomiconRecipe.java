@@ -16,7 +16,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.dynamic.Codecs;
 import net.minecraft.world.World;
 
-import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 public abstract class HemonomiconRecipe implements Recipe<Inventory> {

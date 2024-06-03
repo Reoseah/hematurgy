@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
     public static final RecipeSerializer<SentientBladeAbsorptionRecipe> SERIALIZER = new SpecialSerializer<>(SentientBladeAbsorptionRecipe::new);
@@ -94,7 +95,7 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
             });
 
             if (material.isOf(RitualDaggerItem.INSTANCE)) {
-                abilities.add(new Echoblade(EchobladeCapableItem.getEchobladeLevel(material)));
+                abilities.add(new Echoblade(Optional.ofNullable(material.get(EchobladeCapableItem.LEVEL)).orElse(0)));
             } else if (material.isOf(RitualSickleItem.INSTANCE)) {
                 abilities.add(LifeHarvest.INSTANCE);
             }
@@ -162,13 +163,13 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
 
         @Override
         public boolean canApply(ItemStack stack) {
-            var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
-            return ability != RitualWeaponAbilityComponent.ECHOBLADE;
+            var ability = stack.get(SpecialAbilityComponent.TYPE);
+            return ability != SpecialAbilityComponent.ECHOBLADE;
         }
 
         @Override
         public void apply(ItemStack stack) {
-            stack.set(RitualWeaponAbilityComponent.TYPE, RitualWeaponAbilityComponent.ECHOBLADE);
+            stack.set(SpecialAbilityComponent.TYPE, SpecialAbilityComponent.ECHOBLADE);
             stack.set(EchobladeCapableItem.LEVEL, this.level);
             if (stack.contains(BloodSourceComponent.TYPE)) {
                 stack.remove(BloodSourceComponent.TYPE);
@@ -186,13 +187,13 @@ public class SentientBladeAbsorptionRecipe extends HemonomiconRecipe {
 
         @Override
         public boolean canApply(ItemStack stack) {
-            var ability = stack.get(RitualWeaponAbilityComponent.TYPE);
-            return ability != RitualWeaponAbilityComponent.HARVEST;
+            var ability = stack.get(SpecialAbilityComponent.TYPE);
+            return ability != SpecialAbilityComponent.SICKLE;
         }
 
         @Override
         public void apply(ItemStack stack) {
-            stack.set(RitualWeaponAbilityComponent.TYPE, RitualWeaponAbilityComponent.HARVEST);
+            stack.set(SpecialAbilityComponent.TYPE, SpecialAbilityComponent.SICKLE);
             if (stack.contains(EchobladeCapableItem.LEVEL)) {
                 stack.remove(EchobladeCapableItem.LEVEL);
             }

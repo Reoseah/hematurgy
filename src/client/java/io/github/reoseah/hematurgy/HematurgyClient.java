@@ -1,6 +1,9 @@
 package io.github.reoseah.hematurgy;
 
-import io.github.reoseah.hematurgy.item.*;
+import io.github.reoseah.hematurgy.item.BloodSourceComponent;
+import io.github.reoseah.hematurgy.item.RitualSickleItem;
+import io.github.reoseah.hematurgy.item.SentientBladeItem;
+import io.github.reoseah.hematurgy.item.SyringeItem;
 import io.github.reoseah.hematurgy.resource.BookLoader;
 import io.github.reoseah.hematurgy.screen.HemonomiconScreenHandler;
 import io.github.reoseah.hematurgy.screen.client.HemonomiconScreen;
@@ -24,7 +27,6 @@ public class HematurgyClient implements ClientModInitializer {
                 (stack, world, entity, seed) -> stack.contains(BloodSourceComponent.TYPE) ? 1F : 0F);
         ModelPredicateProviderRegistry.register(SyringeItem.INSTANCE, new Identifier("hematurgy:has_target"),
                 (stack, world, entity, seed) -> stack.contains(BloodSourceComponent.TYPE) ? 1F : 0F);
-
 
 
         ResourceManagerHelperImpl.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new BookLoader());
