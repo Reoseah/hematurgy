@@ -351,7 +351,30 @@
     { "type": "chapter", "translation_key": "hematurgy.hemomorphosis.unformatted" },
     { "type": "heading", "translation_key": "hematurgy.hemomorphosis" },
     { "type": "paragraph", "translation_key": "hematurgy.hemomorphosis.0" },
-
+    {
+      "type": "fold",
+      "left": [
+        { "type": "heading", "translation_key": "hematurgy.syringe" },
+        { "type": "paragraph", "translation_key": "hematurgy.syringe.components" },
+        { "type": "paragraph", "translation_key": "hematurgy.syringe.text0" },
+        { "type": "paragraph", "translation_key": "hematurgy.syringe.text1" }
+      ],
+      "right": [
+        { "type": "heading", "translation_key": "item.hematurgy.syringe" },
+        {
+          "type": "inventory",
+          "slots": [
+            { "x": 18, "y": 0, "ingredient": { "item": "minecraft:iron_ingot" }, "background": "hematurgy:item/placeholder/ingot" },
+            { "x": 9, "y": 18, "ingredient": { "item": "minecraft:glass_pane" }, "background": "hematurgy:item/placeholder/glass" },
+            { "x": 27, "y": 18, "ingredient": { "item": "minecraft:glass_pane" }, "background": "hematurgy:item/placeholder/glass" },
+            { "x": 18, "y": 36, "ingredient": { "item": "minecraft:netherite_scrap" }, "background": "hematurgy:item/placeholder/netherite_scrap" },
+            { "x": 70, "y": 18, "output": true, "background": "hematurgy:item/placeholder/syringe" }
+          ],
+          "background": { "texture": "hematurgy:textures/gui/hemonomicon.png", "x": 50, "y": 20, "u": 202, "v": 242, "width": 8, "height": 10 }
+        },
+        { "type": "utterance", "translation_key": "hematurgy.syringe.utterance", "id": "hematurgy:recipe/syringe", "duration": 8 }
+      ]
+    },
     { "type": "chapter", "translation_key": "hematurgy.astral_hematurgy.unformatted" },
     { "type": "heading", "translation_key": "hematurgy.astral_hematurgy" },
     { "type": "paragraph", "translation_key": "hematurgy.astral_hematurgy.0" },

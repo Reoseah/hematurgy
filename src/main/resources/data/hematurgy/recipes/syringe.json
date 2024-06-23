@@ -1,0 +1,14 @@
+{
+  "type": "hematurgy:hemonomicon_crafting",
+  "utterance": "hematurgy:recipe/syringe",
+  "duration": 10,
+  "ingredients": [
+    { "item": "minecraft:iron_ingot" },
+    { "item": "minecraft:glass_pane" },
+    { "item": "minecraft:glass_pane" },
+    { "item": "minecraft:netherite_scrap" }
+  ],
+  "result": {
+    "id": "hematurgy:syringe"
+  }
+}
